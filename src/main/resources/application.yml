@@ -1,0 +1,10 @@
+spring:
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        password: 1234
+        url: jdbc:mysql://localhost:3306/mobilele?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+        username: root
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL8InnoDBDialect
+        hibernate:
+            ddl-auto: update
