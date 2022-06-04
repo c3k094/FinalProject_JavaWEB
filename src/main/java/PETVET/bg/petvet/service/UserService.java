@@ -1,6 +1,7 @@
 package PETVET.bg.petvet.service;
 
 import PETVET.bg.petvet.model.DTO.UserLoginDTO;
+import PETVET.bg.petvet.model.DTO.UserRegisterDTO;
 import PETVET.bg.petvet.model.entity.UserEntity;
 import PETVET.bg.petvet.model.user.CurrentUser;
 import PETVET.bg.petvet.repository.UserRepository;
@@ -26,6 +27,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
     public boolean login(UserLoginDTO userLoginDTO) {
+        //TODO: Implement validation for deactivated users.
         Optional<UserEntity> userOpt = userRepository.findByEmail(userLoginDTO.getEmail());
         if(userOpt.isEmpty()) {
             return false;
@@ -36,7 +38,7 @@ public class UserService {
         boolean isPasswordCorrect = passwordEncoder.matches(enteredPass, actualPass);
 
         if (isPasswordCorrect) {
-            currentUser.setLoggedIn(true).setName(userOpt.get().getFirstName() + " " + userOpt.get().getLastName());
+            login(userOpt.get());
 
         }
         else {
@@ -45,7 +47,25 @@ public class UserService {
         return isPasswordCorrect;
     }
 
+    private void login(UserEntity userOpt) {
+        currentUser.setLoggedIn(true).setName(userOpt.getFirstName() + " " + userOpt.getLastName());
+    }
+
     public void logout() {
         currentUser.clear();
+    }
+
+    public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
+        //TODO: Implement confirmation and validation of the password
+        UserEntity newUser =
+                new UserEntity().
+                        setActive(true).
+                        setEmail(userRegisterDTO.getEmail()).
+                        setFirstName(userRegisterDTO.getFirstName()).
+                        setLastName(userRegisterDTO.getLastName()).
+                        setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+
+        newUser = userRepository.save(newUser);
+        login(newUser);
     }
 }

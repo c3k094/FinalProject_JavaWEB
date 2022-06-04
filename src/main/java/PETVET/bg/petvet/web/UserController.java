@@ -1,6 +1,7 @@
 package PETVET.bg.petvet.web;
 
 import PETVET.bg.petvet.model.DTO.UserLoginDTO;
+import PETVET.bg.petvet.model.DTO.UserRegisterDTO;
 import PETVET.bg.petvet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,17 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(){
         userService.logout();
+        return "redirect:/";
+    }
+
+    @GetMapping("/register")
+    public String register(){
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String register(UserRegisterDTO userRegisterDTO){
+        userService.registerAndLogin(userRegisterDTO);
         return "redirect:/";
     }
 }
