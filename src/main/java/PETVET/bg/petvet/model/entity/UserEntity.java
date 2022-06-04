@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -22,10 +22,22 @@ public class UserEntity extends BaseEntity {
 
     private String imageUrl;
 
+    @Column(nullable = false)
+    private boolean isActive;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRoleEntity> userRoles = new ArrayList<>();
 
     public UserEntity() {}
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public UserEntity setActive(boolean active) {
+        isActive = active;
+        return this;
+    }
 
     public String getEmail() {
         return email;

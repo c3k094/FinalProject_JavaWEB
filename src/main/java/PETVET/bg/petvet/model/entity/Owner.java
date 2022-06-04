@@ -1,9 +1,8 @@
 package PETVET.bg.petvet.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import PETVET.bg.petvet.model.entity.enums.Address;
+
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -18,7 +17,9 @@ public class Owner extends BaseEntity{
     @Column(nullable = false,unique = true)
     private String email;
 
-    private String address;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @Column(nullable = false,unique = true)
     private int phoneNumber;
@@ -55,11 +56,11 @@ public class Owner extends BaseEntity{
         return this;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public Owner setAddress(String address) {
+    public Owner setAddress(Address address) {
         this.address = address;
         return this;
     }
