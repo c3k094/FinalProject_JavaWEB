@@ -25,6 +25,8 @@ public class UserEntity extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRoleEntity> userRoles = new ArrayList<>();
 
+    public UserEntity() {}
+
     public String getEmail() {
         return email;
     }
