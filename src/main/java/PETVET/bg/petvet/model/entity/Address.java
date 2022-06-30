@@ -1,4 +1,4 @@
-package PETVET.bg.petvet.model.entity.enums;
+package PETVET.bg.petvet.model.entity;
 
 import PETVET.bg.petvet.model.entity.BaseEntity;
 

@@ -1,7 +1,5 @@
 package PETVET.bg.petvet.model.entity;
 
-import PETVET.bg.petvet.model.entity.enums.Address;
-
 import javax.persistence.*;
 import java.util.List;
 

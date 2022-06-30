@@ -1,8 +1,17 @@
-package PETVET.bg.petvet.model.DTO;
+package PETVET.bg.petvet.model.dto;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class UserLoginDTO {
 
+    @NotEmpty
+    @Email
     private String email;
+
+    @NotEmpty
+    @Size(min = 8, max = 20)
     private String password;
 
     public String getEmail() {

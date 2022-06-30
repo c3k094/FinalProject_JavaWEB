@@ -1,7 +1,8 @@
 package PETVET.bg.petvet.service;
 
-import PETVET.bg.petvet.model.DTO.UserLoginDTO;
-import PETVET.bg.petvet.model.DTO.UserRegisterDTO;
+import PETVET.bg.petvet.config.UserMapper;
+import PETVET.bg.petvet.model.dto.UserLoginDTO;
+import PETVET.bg.petvet.model.dto.UserRegisterDTO;
 import PETVET.bg.petvet.model.entity.UserEntity;
 import PETVET.bg.petvet.model.user.CurrentUser;
 import PETVET.bg.petvet.repository.UserRepository;
@@ -17,14 +18,16 @@ public class UserService {
     private UserRepository userRepository;
     private CurrentUser currentUser;
     private PasswordEncoder passwordEncoder;
+    private UserMapper userMapper;
 
     @Autowired
     public UserService(UserRepository userRepository,
                        CurrentUser currentUser,
-                       PasswordEncoder passwordEncoder) {
+                       PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.currentUser = currentUser;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
     public boolean login(UserLoginDTO userLoginDTO) {
         //TODO: Implement validation for deactivated users.
@@ -57,15 +60,24 @@ public class UserService {
 
     public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
         //TODO: Implement confirmation and validation of the password
-        UserEntity newUser =
-                new UserEntity().
-                        setActive(true).
-                        setEmail(userRegisterDTO.getEmail()).
-                        setFirstName(userRegisterDTO.getFirstName()).
-                        setLastName(userRegisterDTO.getLastName()).
-                        setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+        if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getConfirmPassword())) {
+            throw new RuntimeException("passwords.match");
+        }
 
-        newUser = userRepository.save(newUser);
+        Optional<UserEntity> byEmail = this.userRepository.findByEmail(userRegisterDTO.getEmail());
+
+        if (byEmail.isPresent()) {
+            throw new RuntimeException("email.used");
+        }
+
+        UserEntity newUser = userMapper.userDtoToUserEntity(userRegisterDTO);
+        newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+        newUser.setActive(true);
+        this.userRepository.save(newUser);
         login(newUser);
+    }
+
+    public Optional<UserEntity> findByEmail(String email) {
+        return this.userRepository.findByEmail(email);
     }
 }
