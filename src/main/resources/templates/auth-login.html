@@ -16,18 +16,16 @@
     <form
             th:action="@{/users/login}"
             th:method="post"
-            th:object="${loginUserDTO}"
             class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
-        <h3 th:if="${mismatchingData == true}" class="mt-5 text-center">
+        <h3 th:if="${bad_credentials}" class="mt-5 text-center">
             <strong class="bg-blur rounded text-danger">
                 Wrong username and password combination.
             </strong>
         </h3>
         <div class="form-group">
-            <label for="email" class="text-white font-weight-bold">Email</label>
-            <input id="email" name="email"
-                   th:field="*{email}"
-                   th:errorclass="is-invalid"
+            <label for="username" class="text-white font-weight-bold">Email</label>
+            <input id="username" name="username"
+                   th:value="${username}"
                    type="text" min="2" max="50"
                    class="form-control"
                    placeholder="Email"/>
@@ -38,8 +36,6 @@
         <div class="form-group">
             <label for="password" class="text-white font-weight-bold">Password</label>
             <input  id="password" name="password"
-                    th:field="*{password}"
-                    th:errorclass="is-invalid"
                     type="password" min="2"
                     max="20" class="form-control"
                     placeholder="Password"/>

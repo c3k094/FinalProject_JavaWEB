@@ -11,8 +11,9 @@ public class Clinic extends BaseEntity{
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
-    private String location;
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @Column(nullable = false)
     private String workingHours;
@@ -24,6 +25,14 @@ public class Clinic extends BaseEntity{
 
     @ManyToMany
     private List<UserEntity> doctors = new ArrayList<>();
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public List<UserEntity> getDoctors() {
         return doctors;
@@ -43,15 +52,6 @@ public class Clinic extends BaseEntity{
 
     public Clinic setName(String name) {
         this.name = name;
-        return this;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public Clinic setLocation(String location) {
-        this.location = location;
         return this;
     }
 

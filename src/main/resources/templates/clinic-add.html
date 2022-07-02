@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-head>
+
 <title>PetVet</title>
 <th:block th:include="~{/fragments/head.html}" />
 </head>
@@ -8,54 +8,51 @@ head>
 <header id="header" class="fixed-top">
     <div th:replace="fragments/navbar">Navbar</div>
 </header>
+<div class="container-fluid pt-5 mb-4">
+<div class="row" style="height: 4em;"></div>
+<form class="justify-content-center mx-auto">
+    <div class="form-group col-md-6">
+            <label for="name">name</label>
+            <input type="name" class="form-control" id="name" placeholder="Clinic name">
+        </div>
 
-<form>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="inputPassword4">Password</label>
-            <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-        </div>
+    <div class="form-group col-md-2">
+        <label for="inputWorkingHours">Working hours</label>
+        <input type="text" class="form-control" id="inputWorkingHours">
     </div>
-    <div class="form-group">
-        <label for="inputAddress">Address</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-    </div>
-    <div class="form-group">
-        <label for="inputAddress2">Address 2</label>
-        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity">
-        </div>
+
         <div class="form-group col-md-4">
-            <label for="inputState">State</label>
-            <select id="inputState" class="form-control">
+            <label for="inputCountry">Country</label>
+            <select id="inputCountry" class="form-control">
                 <option selected>Choose...</option>
                 <option>...</option>
             </select>
         </div>
-        <div class="form-group col-md-2">
-            <label for="inputZip">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputZip">Zip</label>
+                <input type="text" class="form-control" id="inputZip">
+            </div>
         </div>
+
+        <div class="form-group col-md-6">
+        <label for="inputAddress">Street address</label>
+        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
     </div>
-    <div class="form-group">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-                Check me out
-            </label>
-        </div>
-    </div>
+
+    <div class="form-group col-md-6">
+    <label for="inputImgUrl">Image Url</label>
+    <input type="text" class="form-control" id="inputImgUrl" placeholder="URL">
+</div>
+
     <button type="submit" class="btn btn-primary">Sign in</button>
 </form>
-
+</div>
 
 </body>
 </html>

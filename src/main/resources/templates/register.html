@@ -82,10 +82,10 @@
             <label for="confirmPassword" class="text-white font-weight-bold">Confirm Password</label>
             <input id="confirmPassword" name="confirmPassword"
                    th:field="*{confirmPassword}"
-                   th:errorclass="is-invalid"
+                   th:classappend="${passwordsDoNotMatch} ? is-invalid: ''"
                    type="password" min="8" max="20" class="form-control"
                    placeholder="Password"/>
-            <p class="invalid-feedback errors alert alert-danger">
+            <p th:if="${passwordsDoNotMatch}" class="invalid-feedback errors alert alert-danger">
                 Passwords should match.
             </p>
         </div>
