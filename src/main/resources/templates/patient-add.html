@@ -11,46 +11,103 @@
 <div class="container-fluid pt-5 mb-4">
 <div class="row" style="height: 4em;"></div>
 <form class="justify-content-center mx-auto">
+    <h2 class="text-center text-white">Animal details:</h2>
     <div class="form-group col-md-6">
-            <label for="name">name</label>
-            <input type="name" class="form-control" id="name" placeholder="Clinic name">
+            <label for="patientName">Patient name</label>
+            <input type="text" class="form-control" id="patientName" placeholder="Patient name">
         </div>
 
     <div class="form-group col-md-2">
-        <label for="inputWorkingHours">Working hours</label>
-        <input type="text" class="form-control" id="inputWorkingHours">
+        <label for="animalType">Animal type</label>
+        <input type="text" class="form-control" id="animalType" placeholder="Animal type">
     </div>
 
         <div class="form-group col-md-4">
-            <label for="inputCountry">Country</label>
-            <select id="inputCountry" class="form-control">
+            <label for="age">Age</label>
+            <select id="age" class="form-control">
                 <option selected>Choose...</option>
-                <option>...</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10z</option>
             </select>
+        </div>
+
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="isVaccinated">
+        <label class="form-check-label" for="isVaccinated">Is the animal vaccinated</label>
+    </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="animalId">Animal Identification number(from passport)</label>
+                <input type="number" class="form-control" id="animalId">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="breed">Breed</label>
+                <input type="text" class="form-control" id="breed">
+            </div>
+        </div>
+
+    <h2 class="text-center text-white">Owner details:</h2>
+
+    <div class="row">
+        <div class="form-group col-md-6 mb-3">
+            <label for="firstName" class="text-white font-weight-bold">First Name</label>
+            <input
+                    id="firstName"
+                    type="text"
+                    min="2"
+                    max="20"
+                    class="form-control"
+                    placeholder="First name"/>
+            <p class="invalid-feedback errors alert alert-danger">
+                First name is required and should be between 2 and 20 symbols.
+            </p>
+        </div>
+        <div class="form-group col-md-6 mb-3">
+            <label for="lastName" class="text-white font-weight-bold">Last Name</label>
+            <input
+                    id="lastName"
+                    type="text"
+                    min="2" max="20" class="form-control"
+                    placeholder="Last name"/>
+            <p class="invalid-feedback errors alert alert-danger">
+                Last name is required and should be between 2 and 20 symbols.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6 mb-3">
+            <label for="email" class="text-white font-weight-bold">Email</label>
+            <input id="email"
+                   type="text"
+                   class="form-control"
+                   placeholder="Email"/>
+            <p class="invalid-feedback errors alert alert-danger">
+                Email is required and should be valid.
+            </p>
+            <p class="errors alert alert-danger">
+                Email is already occupied
+            </p>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="inputCity">City</label>
-                <input type="text" class="form-control" id="inputCity">
+                <label for="phone">Owner Phone Number</label>
+                <input type="number" class="form-control" id="phone">
             </div>
-            <div class="form-group col-md-2">
-                <label for="inputZip">Zip</label>
-                <input type="text" class="form-control" id="inputZip">
-            </div>
-        </div>
-
-        <div class="form-group col-md-6">
-        <label for="inputAddress">Street address</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+    </div>
     </div>
 
-    <div class="form-group col-md-6">
-    <label for="inputImgUrl">Image Url</label>
-    <input type="text" class="form-control" id="inputImgUrl" placeholder="URL">
-</div>
 
-    <button type="submit" class="btn btn-primary">Sign in</button>
+    <button type="submit" class="btn btn-primary">Add patient to the database</button>
 </form>
 </div>
 
