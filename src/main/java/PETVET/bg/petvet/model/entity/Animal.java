@@ -14,7 +14,8 @@ public class Animal extends BaseEntity{
     @Column(nullable = false)
     private String animalType;
 
-    private int years;
+    @Column(nullable = false)
+    private int age;
 
     private boolean isVaccinated;
 
@@ -26,35 +27,21 @@ public class Animal extends BaseEntity{
     private LocalDate lastVisit;
 
     @ManyToOne
-    @JoinColumn(name = "clinic_id")
-    private Clinic clinic;
-
-    @ManyToOne
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
-    @ManyToOne
-    @JoinColumn(name = "doctor_id")
-    private UserEntity doctor;
-
-    public UserEntity getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(UserEntity doctor) {
-        this.doctor = doctor;
-    }
+    @OneToMany(mappedBy = "animal")
+    private List<Manipulation> manipulations;
 
     public Animal() {}
 
-    public Clinic getClinic() {
-        return clinic;
+    public List<Manipulation> getManipulations() {
+        return manipulations;
     }
 
-
-
-    public void setClinic(Clinic clinic) {
-        this.clinic = clinic;
+    public Animal setManipulations(List<Manipulation> manipulations) {
+        this.manipulations = manipulations;
+        return this;
     }
 
     public Owner getOwner() {
@@ -83,12 +70,12 @@ public class Animal extends BaseEntity{
         return this;
     }
 
-    public int getYears() {
-        return years;
+    public int getAge() {
+        return age;
     }
 
-    public Animal setYears(int years) {
-        this.years = years;
+    public Animal setAge(int age) {
+        this.age = age;
         return this;
     }
 

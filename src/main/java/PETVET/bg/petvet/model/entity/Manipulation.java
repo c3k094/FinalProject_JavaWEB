@@ -2,10 +2,7 @@ package PETVET.bg.petvet.model.entity;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -23,6 +20,18 @@ public class Manipulation extends BaseEntity {
 
     @ManyToOne
     private Animal animal;
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private UserEntity doctor;
+
+    public UserEntity getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(UserEntity doctor) {
+        this.doctor = doctor;
+    }
 
     public Manipulation() {
     }
