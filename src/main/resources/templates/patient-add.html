@@ -8,10 +8,16 @@
     <link rel="stylesheet" href="//unpkg.com/bootstrap-select@1.12.4/dist/css/bootstrap-select.min.css" type="text/css" />
     <link rel="stylesheet" href="//unpkg.com/bootstrap-select-country@4.0.0/dist/css/bootstrap-select-country.min.css" type="text/css" />
 
+    <link th:rel="stylesheet" th:href="@{/css/bootstrap-datepicker.css}"/>
+    <link th:rel="stylesheet" th:href="@{/css/bootstrap-datepicker.standalone.css}"/>
+    <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/css/all.css} "/>
+
     <script src="//unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
     <script src="//unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
     <script src="//unpkg.com/bootstrap-select@1.12.4/dist/js/bootstrap-select.min.js"></script>
     <script src="//unpkg.com/bootstrap-select-country@4.0.0/dist/js/bootstrap-select-country.min.js"></script>
+
 </head>
 
 
@@ -21,11 +27,13 @@
 </header>
 <div class="container-fluid pt-5 mb-4">
 <div class="row" style="height: 4em;"></div>
-<form class="justify-content-center mx-auto">
-    <h2 class="text-center text-white">Animal details:</h2>
+<form class="justify-content-center mx-auto" th:action="@{/patients/add}"
+      th:method="post"
+      th:object="${addPatientModel}">
+    <h2 class="text-center text-black">Patient details:</h2>
     <div class="form-group col-md-6">
             <label for="patientName">Patient name</label>
-            <input type="text" class="form-control" id="patientName" placeholder="Patient name">
+            <input type="text" class="form-control" id="patientName" placeholder="Rodrigo">
         </div>
 
     <div class="form-group col-md-2">
@@ -33,22 +41,29 @@
         <input type="text" class="form-control" id="animalType" placeholder="Animal type">
     </div>
 
-        <div class="form-group col-md-4">
-            <label for="age">Age</label>
-            <select id="age" class="form-control">
-                <option selected>Choose...</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10z</option>
-            </select>
+    <div class="form-group row">
+        <div class="col-md-4 mt-5">
+            <label for="birthdate">Date of birth</label>
+            <div class="input-group date">
+                <input type="text" class="form-control" id="birthdate" autocomplete="off" th:field="*{birthdate}"/>
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                </div>
+            </div>
         </div>
+    </div>
+
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap-datepicker.js}"></script>
+
+    <script>
+    $('.input-group.date').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+</script>
 
     <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="isVaccinated">
@@ -64,57 +79,6 @@
                 <label for="breed">Breed</label>
                 <input type="text" class="form-control" id="breed">
             </div>
-        </div>
-
-    <h2 class="text-center text-white">Owner details:</h2>
-
-    <div class="row">
-        <div class="form-group col-md-6 mb-3">
-            <label for="firstName" class="text-white font-weight-bold">First Name</label>
-            <input
-                    id="firstName"
-                    type="text"
-                    min="2"
-                    max="20"
-                    class="form-control"
-                    placeholder="First name"/>
-            <p class="invalid-feedback errors alert alert-danger">
-                First name is required and should be between 2 and 20 symbols.
-            </p>
-        </div>
-        <div class="form-group col-md-6 mb-3">
-            <label for="lastName" class="text-white font-weight-bold">Last Name</label>
-            <input
-                    id="lastName"
-                    type="text"
-                    min="2" max="20" class="form-control"
-                    placeholder="Last name"/>
-            <p class="invalid-feedback errors alert alert-danger">
-                Last name is required and should be between 2 and 20 symbols.
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group col-md-6 mb-3">
-            <label for="email" class="text-white font-weight-bold">Email</label>
-            <input id="email"
-                   type="text"
-                   class="form-control"
-                   placeholder="Email"/>
-            <p class="invalid-feedback errors alert alert-danger">
-                Email is required and should be valid.
-            </p>
-            <p class="errors alert alert-danger">
-                Email is already occupied
-            </p>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="phone">Owner Phone Number</label>
-                <input type="number" class="form-control" id="phone">
-            </div>
-
         </div>
     <button type="submit" class="btn btn-primary">Add patient to the database</button>
 </form>

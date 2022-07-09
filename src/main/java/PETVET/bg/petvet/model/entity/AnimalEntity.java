@@ -15,12 +15,12 @@ public class AnimalEntity extends BaseEntity{
     private String animalType;
 
     @Column(nullable = false)
-    private int age;
+    private LocalDate birthday;
 
     private boolean isVaccinated;
 
     @Column(nullable = false, unique = true)
-    private int identificationNumber;
+    private String identificationNumber;
 
     private String breed;
 
@@ -70,12 +70,12 @@ public class AnimalEntity extends BaseEntity{
         return this;
     }
 
-    public int getAge() {
-        return age;
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
-    public AnimalEntity setAge(int age) {
-        this.age = age;
+    public AnimalEntity setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
         return this;
     }
 
@@ -88,11 +88,11 @@ public class AnimalEntity extends BaseEntity{
         return this;
     }
 
-    public int getIdentificationNumber() {
+    public String getIdentificationNumber() {
         return identificationNumber;
     }
 
-    public AnimalEntity setIdentificationNumber(int identificationNumber) {
+    public AnimalEntity setIdentificationNumber(String identificationNumber) {
         this.identificationNumber = identificationNumber;
         return this;
     }
