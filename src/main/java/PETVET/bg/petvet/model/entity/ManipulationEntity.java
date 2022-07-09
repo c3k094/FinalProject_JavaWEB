@@ -1,13 +1,11 @@
 package PETVET.bg.petvet.model.entity;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "manipulations")
-public class Manipulation extends BaseEntity {
+public class ManipulationEntity extends BaseEntity {
 
     @Column(nullable = false)
     private LocalDate date;
@@ -19,7 +17,7 @@ public class Manipulation extends BaseEntity {
     private String additionalInformation;
 
     @ManyToOne
-    private Animal animal;
+    private AnimalEntity animal;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")
@@ -33,14 +31,14 @@ public class Manipulation extends BaseEntity {
         this.doctor = doctor;
     }
 
-    public Manipulation() {
+    public ManipulationEntity() {
     }
 
     public LocalDate getDate() {
         return date;
     }
 
-    public Manipulation setDate(LocalDate date) {
+    public ManipulationEntity setDate(LocalDate date) {
         this.date = date;
         return this;
     }
@@ -49,7 +47,7 @@ public class Manipulation extends BaseEntity {
         return type;
     }
 
-    public Manipulation setType(String type) {
+    public ManipulationEntity setType(String type) {
         this.type = type;
         return this;
     }
@@ -58,7 +56,7 @@ public class Manipulation extends BaseEntity {
         return additionalInformation;
     }
 
-    public Manipulation setAdditionalInformation(String additionalInformation) {
+    public ManipulationEntity setAdditionalInformation(String additionalInformation) {
         this.additionalInformation = additionalInformation;
         return this;
     }

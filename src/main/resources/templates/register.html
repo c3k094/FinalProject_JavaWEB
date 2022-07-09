@@ -59,7 +59,7 @@
                 <p class="invalid-feedback errors alert alert-danger">
                     Email is required and should be valid.
                 </p>
-                <p class="errors alert alert-danger">
+                <p class="errors alert alert-danger" th:if="${dupeEmail}">
                     Email is already occupied
                 </p>
             </div>

@@ -35,7 +35,8 @@ public class SecurityConfiguration {
             // everyone can download static resources (css, js, images)
                     requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
             // everyone can log in and register
-                    antMatchers("/", "/users/login", "/users/register").permitAll().
+                    antMatchers("/").permitAll().
+                    antMatchers( "/users/login", "/users/register").anonymous().
             // pages available only for moderators
                     antMatchers("/pages/moderators").hasRole(UserRoleEnum.MODERATOR.name()).
             // pages available only for admins

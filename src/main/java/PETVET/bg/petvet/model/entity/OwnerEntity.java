@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "owners")
-public class Owner extends BaseEntity{
+public class OwnerEntity extends BaseEntity{
     @Column(nullable = false)
     private String firstName;
 
@@ -15,23 +15,22 @@ public class Owner extends BaseEntity{
     @Column(nullable = false,unique = true)
     private String email;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "address_id")
-    private Address address;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private AddressEntity address;
 
     @Column(nullable = false,unique = true)
-    private int phoneNumber;
+    private String phoneNumber;
 
     @OneToMany(mappedBy = "owner")
-    private List<Animal> pets;
+    private List<AnimalEntity> pets;
 
-    public Owner() {}
+    public OwnerEntity() {}
 
     public String getFirstName() {
         return firstName;
     }
 
-    public Owner setFirstName(String firstName) {
+    public OwnerEntity setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -40,7 +39,7 @@ public class Owner extends BaseEntity{
         return lastName;
     }
 
-    public Owner setLastName(String lastName) {
+    public OwnerEntity setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -49,34 +48,34 @@ public class Owner extends BaseEntity{
         return email;
     }
 
-    public Owner setEmail(String email) {
+    public OwnerEntity setEmail(String email) {
         this.email = email;
         return this;
     }
 
-    public Address getAddress() {
+    public AddressEntity getAddress() {
         return address;
     }
 
-    public Owner setAddress(Address address) {
+    public OwnerEntity setAddress(AddressEntity address) {
         this.address = address;
         return this;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public Owner setPhoneNumber(int phoneNumber) {
+    public OwnerEntity setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
 
-    public List<Animal> getPets() {
+    public List<AnimalEntity> getPets() {
         return pets;
     }
 
-    public Owner setPets(List<Animal> pets) {
+    public OwnerEntity setPets(List<AnimalEntity> pets) {
         this.pets = pets;
         return this;
     }

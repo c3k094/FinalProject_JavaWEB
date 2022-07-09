@@ -43,6 +43,12 @@ public class RegistrationController {
       redirectAttributes.addFlashAttribute("passwordsDoNotMatch", passwordsDoNotMatch);
       return "redirect:/users/register";
     }
+    if(userService.findByEmail(userModel.getEmail()).isPresent()){
+      redirectAttributes.addFlashAttribute("userModel", userModel);
+      redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userModel", bindingResult);
+      redirectAttributes.addFlashAttribute("dupeEmail", true);
+      return "redirect:/users/register";
+    }
 
     userService.registerAndLogin(userModel);
     return "redirect:/";

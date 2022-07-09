@@ -4,6 +4,7 @@ import PETVET.bg.petvet.model.dto.UserRegisterDTO;
 import PETVET.bg.petvet.model.entity.UserEntity;
 import PETVET.bg.petvet.model.entity.UserRoleEntity;
 import PETVET.bg.petvet.model.entity.enums.UserRoleEnum;
+import PETVET.bg.petvet.model.mapper.UserMapper;
 import PETVET.bg.petvet.repository.UserRepository;
 import PETVET.bg.petvet.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +28,20 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     private UserRoleRepository userRoleRepository;
     private String adminPass;
+    private UserMapper userMapper;
+
     @Autowired
     public UserService(UserRepository userRepository,
                        UserRoleRepository userRoleRepository,
                        PasswordEncoder passwordEncoder,
                        UserDetailsService appUserDetailsService,
-                       @Value("${app.default.admin.password}") String adminPass)  {
+                       @Value("${app.default.admin.password}") String adminPass, UserMapper userMapper)  {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
         this.appUserDetailsService = appUserDetailsService;
         this.adminPass = adminPass;
+        this.userMapper = userMapper;
     }
 
     public Optional<UserEntity> findByEmail(String email) {
@@ -93,11 +97,7 @@ public class UserService {
 
     public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
         UserEntity newUser =
-                new UserEntity().
-                        setEmail(userRegisterDTO.getEmail()).
-                        setFirstName(userRegisterDTO.getFirstName()).
-                        setLastName(userRegisterDTO.getLastName()).
-                        setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+                userMapper.userDtoToUserEntity(userRegisterDTO);
 
         userRepository.save(newUser);
 

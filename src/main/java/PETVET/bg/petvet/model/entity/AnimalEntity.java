@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "animals")
-public class Animal extends BaseEntity{
+public class AnimalEntity extends BaseEntity{
 
     @Column(nullable = false)
     private String name;
@@ -28,27 +28,27 @@ public class Animal extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private Owner owner;
+    private OwnerEntity owner;
 
     @OneToMany(mappedBy = "animal")
-    private List<Manipulation> manipulations;
+    private List<ManipulationEntity> manipulations;
 
-    public Animal() {}
+    public AnimalEntity() {}
 
-    public List<Manipulation> getManipulations() {
+    public List<ManipulationEntity> getManipulations() {
         return manipulations;
     }
 
-    public Animal setManipulations(List<Manipulation> manipulations) {
+    public AnimalEntity setManipulations(List<ManipulationEntity> manipulations) {
         this.manipulations = manipulations;
         return this;
     }
 
-    public Owner getOwner() {
+    public OwnerEntity getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwner(OwnerEntity owner) {
         this.owner = owner;
     }
 
@@ -56,7 +56,7 @@ public class Animal extends BaseEntity{
         return name;
     }
 
-    public Animal setName(String name) {
+    public AnimalEntity setName(String name) {
         this.name = name;
         return this;
     }
@@ -65,7 +65,7 @@ public class Animal extends BaseEntity{
         return animalType;
     }
 
-    public Animal setAnimalType(String animalType) {
+    public AnimalEntity setAnimalType(String animalType) {
         this.animalType = animalType;
         return this;
     }
@@ -74,7 +74,7 @@ public class Animal extends BaseEntity{
         return age;
     }
 
-    public Animal setAge(int age) {
+    public AnimalEntity setAge(int age) {
         this.age = age;
         return this;
     }
@@ -83,7 +83,7 @@ public class Animal extends BaseEntity{
         return isVaccinated;
     }
 
-    public Animal setVaccinated(boolean vaccinated) {
+    public AnimalEntity setVaccinated(boolean vaccinated) {
         isVaccinated = vaccinated;
         return this;
     }
@@ -92,7 +92,7 @@ public class Animal extends BaseEntity{
         return identificationNumber;
     }
 
-    public Animal setIdentificationNumber(int identificationNumber) {
+    public AnimalEntity setIdentificationNumber(int identificationNumber) {
         this.identificationNumber = identificationNumber;
         return this;
     }
@@ -101,7 +101,7 @@ public class Animal extends BaseEntity{
         return breed;
     }
 
-    public Animal setBreed(String breed) {
+    public AnimalEntity setBreed(String breed) {
         this.breed = breed;
         return this;
     }
@@ -110,7 +110,7 @@ public class Animal extends BaseEntity{
         return lastVisit;
     }
 
-    public Animal setLastVisit(LocalDate lastVisit) {
+    public AnimalEntity setLastVisit(LocalDate lastVisit) {
         this.lastVisit = lastVisit;
         return this;
     }
