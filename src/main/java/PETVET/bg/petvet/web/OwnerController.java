@@ -3,6 +3,8 @@ package PETVET.bg.petvet.web;
 import PETVET.bg.petvet.model.dto.AddOwnerDTO;
 import PETVET.bg.petvet.model.dto.UserRegisterDTO;
 import PETVET.bg.petvet.model.entity.OwnerEntity;
+import PETVET.bg.petvet.model.view.OwnerDetailsView;
+import PETVET.bg.petvet.model.view.OwnerTableView;
 import PETVET.bg.petvet.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -52,5 +56,19 @@ public class OwnerController {
     ownerService.addOwner(addOwnerModel);
         return "redirect:/owners/all";
 
+    }
+
+    @GetMapping("/owners/all")
+    public String allOwners(Model model){
+        List<OwnerTableView> owners = ownerService.findViewAll();
+        model.addAttribute("owners", owners);
+        return "owners";
+    }
+
+    @GetMapping("/owners/view/{id}")
+        public String viewOwner(Model model, @PathVariable Long id){
+        OwnerDetailsView ownerDetails = ownerService.findOwnerDetailsById(id);
+        model.addAttribute("ownerDetails",ownerDetails);
+        return "owner";
     }
 }

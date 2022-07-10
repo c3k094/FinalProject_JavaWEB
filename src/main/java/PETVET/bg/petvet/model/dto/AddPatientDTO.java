@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class AddPatientDTO {
 
@@ -16,21 +17,18 @@ public class AddPatientDTO {
     private String animalType;
 
     @PastOrPresent
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDate birthdate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
+    private Date birthdate;
 
     @NotNull
-    private boolean isVaccinated;
+    private boolean vaccinated;
 
     @NotEmpty
     @Size(min = 5, max = 30)
     private String identificationNumber;
 
-    @NotEmpty
-    @Size(min = 2, max = 50)
     private String breed;
-
-    private LocalDate lastVisit;
 
     @NotNull
     private Long ownerId;
@@ -56,21 +54,21 @@ public class AddPatientDTO {
         return this;
     }
 
-    public LocalDate getBirthdate() {
+    public Date getBirthdate() {
         return birthdate;
     }
 
-    public AddPatientDTO setBirthdate(LocalDate birthdate) {
+    public AddPatientDTO setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
         return this;
     }
 
     public boolean isVaccinated() {
-        return isVaccinated;
+        return vaccinated;
     }
 
     public AddPatientDTO setVaccinated(boolean vaccinated) {
-        isVaccinated = vaccinated;
+        this.vaccinated = vaccinated;
         return this;
     }
 
@@ -89,15 +87,6 @@ public class AddPatientDTO {
 
     public AddPatientDTO setBreed(String breed) {
         this.breed = breed;
-        return this;
-    }
-
-    public LocalDate getLastVisit() {
-        return lastVisit;
-    }
-
-    public AddPatientDTO setLastVisit(LocalDate lastVisit) {
-        this.lastVisit = lastVisit;
         return this;
     }
 

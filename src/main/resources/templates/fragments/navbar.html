@@ -24,7 +24,10 @@
                     <a class="nav-link" th:href="@{/users/profile}">My Profile</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" th:href="@{/patients/all}">My Patients</a>
+                    <a class="nav-link" th:href="@{/patients/all}">View Patients</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/owners/all}">View Owners</a>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"

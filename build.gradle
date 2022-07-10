@@ -27,6 +27,8 @@ dependencies {
 	implementation 'org.webjars:bootstrap-datepicker:1.9.0'
 	implementation 'org.webjars:bootstrap:4.0.0-2'
 	implementation 'org.webjars:font-awesome:6.1.0'
+	implementation 'org.modelmapper:modelmapper:3.1.0'
+
 }
 
 

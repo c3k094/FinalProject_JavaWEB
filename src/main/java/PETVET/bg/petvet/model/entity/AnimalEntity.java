@@ -2,6 +2,7 @@ package PETVET.bg.petvet.model.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class AnimalEntity extends BaseEntity{
     private String animalType;
 
     @Column(nullable = false)
-    private LocalDate birthday;
+    private Date birthday;
 
     private boolean isVaccinated;
 
@@ -23,8 +24,6 @@ public class AnimalEntity extends BaseEntity{
     private String identificationNumber;
 
     private String breed;
-
-    private LocalDate lastVisit;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
@@ -48,8 +47,9 @@ public class AnimalEntity extends BaseEntity{
         return owner;
     }
 
-    public void setOwner(OwnerEntity owner) {
+    public AnimalEntity setOwner(OwnerEntity owner) {
         this.owner = owner;
+        return this;
     }
 
     public String getName() {
@@ -70,11 +70,11 @@ public class AnimalEntity extends BaseEntity{
         return this;
     }
 
-    public LocalDate getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public AnimalEntity setBirthday(LocalDate birthday) {
+    public AnimalEntity setBirthday(Date birthday) {
         this.birthday = birthday;
         return this;
     }
@@ -105,15 +105,5 @@ public class AnimalEntity extends BaseEntity{
         this.breed = breed;
         return this;
     }
-
-    public LocalDate getLastVisit() {
-        return lastVisit;
-    }
-
-    public AnimalEntity setLastVisit(LocalDate lastVisit) {
-        this.lastVisit = lastVisit;
-        return this;
-    }
-
 
 }
