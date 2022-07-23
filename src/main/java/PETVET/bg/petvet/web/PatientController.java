@@ -1,8 +1,11 @@
 package PETVET.bg.petvet.web;
 
 import PETVET.bg.petvet.model.dto.AddPatientDTO;
+import PETVET.bg.petvet.model.dto.EditPatientDTO;
 import PETVET.bg.petvet.model.entity.AnimalEntity;
+import PETVET.bg.petvet.model.view.OwnerDetailsView;
 import PETVET.bg.petvet.model.view.OwnerDropDownView;
+import PETVET.bg.petvet.model.view.PatientDetailsView;
 import PETVET.bg.petvet.model.view.PatientTableView;
 import PETVET.bg.petvet.service.OwnerService;
 import PETVET.bg.petvet.service.PatientService;
@@ -10,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -32,9 +32,16 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @ModelAttribute("addPatientModel")
+    @ModelAttribute("addPatientDTO")
     public void initPatientModel(Model model) {
         model.addAttribute("addPatientDTO", new AddPatientDTO());
+    }
+
+    @GetMapping("/patients/view/{id}")
+    public String viewPatient(Model model, @PathVariable Long id){
+        PatientDetailsView patientDetails = patientService.findPatientDetailsById(id);
+        model.addAttribute("patientDetails", patientDetails);
+        return "patient";
     }
 
     @GetMapping("/patients/all")
@@ -42,6 +49,21 @@ public class PatientController {
         List<PatientTableView> patients = patientService.findViewAll();
         model.addAttribute("patients", patients);
         return "patients";
+    }
+    @GetMapping("/patients/delete/{id}")
+    public String delete(@PathVariable Long id){
+        patientService.deleteById(id);
+        return "redirect:/patients/all";
+    }
+
+    @GetMapping("/patients/edit/{id}")
+    public String editPatient(Model model, @PathVariable Long id) {
+        List<OwnerDropDownView> owners = ownerService.findAll();
+        EditPatientDTO editPatientDTO = patientService.getEditPatientDTOById(id);
+        editPatientDTO.setId(id);
+        model.addAttribute("editPatientDTO",editPatientDTO);
+        model.addAttribute("owners", owners);
+        return "patient-edit";
     }
 
     @GetMapping("/patients/add")
@@ -55,11 +77,17 @@ public class PatientController {
             }
     return "patient-add";
     }
+
+    @GetMapping("/patients/add/error")
+    public String addError(){
+        return "patient-add";
+    }
     @PostMapping("/patients/add")
     public String addPatient(@Valid AddPatientDTO addPatientDTO,
-                             @RequestParam Optional<Long> ownerId,
                              BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes){
+                             RedirectAttributes redirectAttributes,
+                             @RequestParam Optional<Long> ownerId
+                             ){
 
         boolean hasOwner = ownerId.isPresent();
         List<OwnerDropDownView> owners = ownerService.findAll();
@@ -71,7 +99,7 @@ public class PatientController {
             redirectAttributes.addFlashAttribute("patientExist", optionalPatient.isPresent());
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addPatientDTO",
                     bindingResult);
-            return "redirect:/patients/add" + (hasOwner ? "?ownerId=" + ownerId.get().toString() : "");
+            return "redirect:/patients/add/error" + (hasOwner ? "?ownerId=" + ownerId.get().toString() : "");
         }
         AnimalEntity newPatient = new AnimalEntity()
                 .setOwner(ownerService.findById(addPatientDTO.getOwnerId()))

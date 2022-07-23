@@ -20,12 +20,12 @@
 <div class="container-fluid pt-5 mb-4">
     <div class="row" style="height: 4em;"></div>
     <form class="justify-content-center mx-auto"
-          th:action="@{/patients/add} + ${hasOwner ? '?ownerId=' + addPatientDTO.ownerId : ''}"
+          th:action="@{/patients/edit}+${editPatientDTO.id}"
           th:method="post"
-          th:object="${addPatientDTO}">
-        <h2 class="text-center text-black">Patient details:</h2>
+          th:object="${editPatientDTO}">
+        <h2 class="text-center text-black">Edit patient details:</h2>
 
-        <div class="row" th:styleappend="${hasOwner} ? 'visibility:hidden' : ''">
+        <div class="row">
             <div class="form-group col-md-6">
                 <label class="text-center text-black font-weight-bold" for="ownerId">Owner</label>
                 <select id="ownerId"
@@ -66,8 +66,8 @@
         <div class="form-group row">
 
             <div>
-                <label for="birthdate">Date of birth:</label>
-                <input type="date" th:field="*{birthdate}"  name="birthdate" th:errorclass="is-invalid"  id="birthdate"/>
+                <label for="birthday">Date of birth:</label>
+                <input type="date" th:field="*{birthday}"  name="birthday" th:errorclass="is-invalid"  id="birthday"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     Date is required and should be in the format dd/MM/yyyy and should be today date or before that.
                 </p>
@@ -97,7 +97,7 @@
                 <input type="text" th:field="*{breed}" class="form-control" id="breed">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Add patient to the database</button>
+        <button type="submit" class="btn btn-primary">Edit</button>
     </form>
 </div>
 
