@@ -38,40 +38,46 @@ public class PatientController {
 
     @ModelAttribute("addPatientModel")
     public void initPatientModel(Model model) {
-        model.addAttribute("addPatientModel", new AddPatientDTO());
+        model.addAttribute("addPatientDTO", new AddPatientDTO());
     }
 
     @GetMapping("/patients/add")
-    public String addPatient(Model model, @RequestParam Optional<Long> ownerId){
+    public String addPatient(Model model, @RequestParam Optional<Long> ownerId, AddPatientDTO addPatientDTO){
+        boolean hasOwner = ownerId.isPresent();
             List<OwnerDropDownView> owners = ownerService.findAll();
-            model.addAttribute("owners", ownerId.isEmpty() ? owners : new ArrayList<OwnerDropDownView>());
-            model.addAttribute("ownerId", ownerId.get());
+            model.addAttribute("owners", owners);
+            model.addAttribute("hasOwner", hasOwner);
+            if (hasOwner) {
+                addPatientDTO.setOwnerId(ownerId.get());
+            }
     return "patient-add";
     }
     @PostMapping("/patients/add")
-    public String addPatient(@Valid AddPatientDTO addPatientModel,
+    public String addPatient(@Valid AddPatientDTO addPatientDTO,
                              @RequestParam Optional<Long> ownerId,
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes){
-        ownerId.ifPresent(addPatientModel::setOwnerId);
+
+        boolean hasOwner = ownerId.isPresent();
         List<OwnerDropDownView> owners = ownerService.findAll();
-        Optional<AnimalEntity> optionalPatient = patientService.findByIdentificationNumber(addPatientModel.getIdentificationNumber());
+        Optional<AnimalEntity> optionalPatient = patientService.findByIdentificationNumber(addPatientDTO.getIdentificationNumber());
         if (bindingResult.hasErrors() || optionalPatient.isPresent()){
-            redirectAttributes.addFlashAttribute("addPatientModel", addPatientModel);
-            redirectAttributes.addFlashAttribute("owners", ownerId.isEmpty() ? owners : new ArrayList<OwnerDropDownView>());
+            redirectAttributes.addFlashAttribute("addPatientDTO", addPatientDTO);
+            redirectAttributes.addFlashAttribute("owners", owners);
+            redirectAttributes.addFlashAttribute("hasOwner", hasOwner);
             redirectAttributes.addFlashAttribute("patientExist", optionalPatient.isPresent());
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addPatientModel",
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addPatientDTO",
                     bindingResult);
-            return "redirect:/patients/add";
+            return "redirect:/patients/add" + (hasOwner ? "?ownerId=" + ownerId.get().toString() : "");
         }
         AnimalEntity newPatient = new AnimalEntity()
-                .setOwner(ownerService.findById(addPatientModel.getOwnerId()))
-                .setName(addPatientModel.getName())
-                .setAnimalType(addPatientModel.getAnimalType())
-                .setVaccinated(addPatientModel.isVaccinated())
-                .setBirthday(addPatientModel.getBirthdate())
-                .setIdentificationNumber(addPatientModel.getIdentificationNumber())
-                .setBreed(addPatientModel.getBreed());
+                .setOwner(ownerService.findById(addPatientDTO.getOwnerId()))
+                .setName(addPatientDTO.getName())
+                .setAnimalType(addPatientDTO.getAnimalType())
+                .setVaccinated(addPatientDTO.isVaccinated())
+                .setBirthday(addPatientDTO.getBirthdate())
+                .setIdentificationNumber(addPatientDTO.getIdentificationNumber())
+                .setBreed(addPatientDTO.getBreed());
 
         patientService.save(newPatient);
         return "redirect:/patients/all";

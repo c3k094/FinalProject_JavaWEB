@@ -20,12 +20,12 @@
 <div class="container-fluid pt-5 mb-4">
     <div class="row" style="height: 4em;"></div>
     <form class="justify-content-center mx-auto"
-          th:action="@{/patients/add}+${owners.size() > 0}"
+          th:action="@{/patients/add}+${hasOwner ? '?ownerId=' + addPatientDTO.ownerId : ''}"
           th:method="post"
-          th:object="${addPatientModel}">
+          th:object="${addPatientDTO}">
         <h2 class="text-center text-black">Patient details:</h2>
 
-        <div class="row" th:if="${owners.size() > 0}">
+        <div class="row" th:styleappend="${hasOwner} ? 'visibility:hidden' : ''">
             <div class="form-group col-md-6">
                 <label class="text-center text-black font-weight-bold" for="ownerId">Owner</label>
                 <select id="ownerId"

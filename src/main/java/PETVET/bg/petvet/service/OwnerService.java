@@ -47,7 +47,7 @@ public class OwnerService {
                     setCity(addOwnerModel.getCity()).
                     setCountry(addOwnerModel.getCountry()).
                     setStreet(addOwnerModel.getStreet()).
-                    setPostCode(addOwnerModel.getPostCode());
+                    setPostcode(addOwnerModel.getPostcode());
             newOwner.setAddress(address);
         } else {
             newOwner.setAddress(optionalAddress.get());

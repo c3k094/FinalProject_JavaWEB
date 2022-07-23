@@ -17,7 +17,7 @@ public class AddressEntity extends BaseEntity {
     @Column(nullable = false)
     private String street;
 
-    private String postCode;
+    private String postcode;
 
     public AddressEntity() {
     }
@@ -49,12 +49,12 @@ public class AddressEntity extends BaseEntity {
         return this;
     }
 
-    public String getPostCode() {
-        return postCode;
+    public String getPostcode() {
+        return postcode;
     }
 
-    public AddressEntity setPostCode(String postCode) {
-        this.postCode = postCode;
+    public AddressEntity setPostcode(String postcode) {
+        this.postcode = postcode;
         return this;
     }
 }

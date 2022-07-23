@@ -1,7 +1,5 @@
 package PETVET.bg.petvet.model.dto;
 
-import org.springframework.format.annotation.NumberFormat;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -28,7 +26,7 @@ public class AddOwnerDTO {
     private String city;
     @NotEmpty
     private String street;
-    private String postCode;
+    private String postcode;
 
     public AddOwnerDTO() {
     }
@@ -96,12 +94,12 @@ public class AddOwnerDTO {
         return this;
     }
 
-    public String getPostCode() {
-        return postCode;
+    public String getPostcode() {
+        return postcode;
     }
 
-    public AddOwnerDTO setPostCode(String postCode) {
-        this.postCode = postCode;
+    public AddOwnerDTO setPostcode(String postcode) {
+        this.postcode = postcode;
         return this;
     }
 }

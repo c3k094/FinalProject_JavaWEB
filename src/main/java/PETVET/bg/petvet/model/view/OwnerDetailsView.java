@@ -1,7 +1,6 @@
 package PETVET.bg.petvet.model.view;
 
 import PETVET.bg.petvet.model.entity.AddressEntity;
-import PETVET.bg.petvet.model.entity.AnimalEntity;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class OwnerDetailsView {
 
     private String phoneNumber;
 
-    private List<AnimalEntity> pets;
+    private List<AnimalCardView> pets;
 
     public OwnerDetailsView() {
     }
@@ -78,11 +77,11 @@ public class OwnerDetailsView {
         return this;
     }
 
-    public List<AnimalEntity> getPets() {
+    public List<AnimalCardView> getPets() {
         return pets;
     }
 
-    public OwnerDetailsView setPets(List<AnimalEntity> pets) {
+    public OwnerDetailsView setPets(List<AnimalCardView> pets) {
         this.pets = pets;
         return this;
     }
