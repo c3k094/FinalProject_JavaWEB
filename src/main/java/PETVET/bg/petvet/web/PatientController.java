@@ -3,6 +3,7 @@ package PETVET.bg.petvet.web;
 import PETVET.bg.petvet.model.dto.AddPatientDTO;
 import PETVET.bg.petvet.model.entity.AnimalEntity;
 import PETVET.bg.petvet.model.view.OwnerDropDownView;
+import PETVET.bg.petvet.model.view.PatientTableView;
 import PETVET.bg.petvet.service.OwnerService;
 import PETVET.bg.petvet.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +35,13 @@ public class PatientController {
     @ModelAttribute("addPatientModel")
     public void initPatientModel(Model model) {
         model.addAttribute("addPatientDTO", new AddPatientDTO());
+    }
+
+    @GetMapping("/patients/all")
+    public String allPatients(Model model){
+        List<PatientTableView> patients = patientService.findViewAll();
+        model.addAttribute("patients", patients);
+        return "patients";
     }
 
     @GetMapping("/patients/add")
