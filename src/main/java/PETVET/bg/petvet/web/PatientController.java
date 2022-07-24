@@ -137,9 +137,17 @@ public class PatientController {
                 .setName(addPatientDTO.getName())
                 .setAnimalType(addPatientDTO.getAnimalType())
                 .setVaccinated(addPatientDTO.isVaccinated())
+                .setVaccine(addPatientDTO.getVaccine())
+                .setVaccinationDate(addPatientDTO.getVaccinationDate())
                 .setBirthday(addPatientDTO.getBirthdate())
                 .setIdentificationNumber(addPatientDTO.getIdentificationNumber())
-                .setBreed(addPatientDTO.getBreed());
+                .setBreed(addPatientDTO.getBreed())
+                .setDewormed(addPatientDTO.isDewormed())
+                .setDewormingType(addPatientDTO.getDewormingType())
+                .setDewromingDate(addPatientDTO.getDewormingDate())
+                .setCastrated(addPatientDTO.isCastrated())
+                ;
+
 
         patientService.save(newPatient);
         return "redirect:/patients/all";

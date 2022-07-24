@@ -1,5 +1,7 @@
 package PETVET.bg.petvet.model.entity;
 
+import PETVET.bg.petvet.model.entity.enums.DewormingType;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
@@ -20,6 +22,20 @@ public class AnimalEntity extends BaseEntity{
 
     private boolean isVaccinated;
 
+    private Date vaccinationDate;
+
+    private String vaccine;
+
+    private boolean isCastrated;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    private boolean isDewormed;
+
+    private DewormingType dewormingType;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    private Date dewromingDate;
+
     @Column(nullable = false, unique = true)
     private String identificationNumber;
 
@@ -33,6 +49,60 @@ public class AnimalEntity extends BaseEntity{
     private List<ManipulationEntity> manipulations;
 
     public AnimalEntity() {}
+
+    public String getVaccine() {
+        return vaccine;
+    }
+
+    public AnimalEntity setVaccine(String vaccine) {
+        this.vaccine = vaccine;
+        return this;
+    }
+
+    public DewormingType getDewormingType() {
+        return dewormingType;
+    }
+
+    public AnimalEntity setDewormingType(DewormingType dewormingType) {
+        this.dewormingType = dewormingType;
+        return this;
+    }
+
+    public Date getVaccinationDate() {
+        return vaccinationDate;
+    }
+
+    public AnimalEntity setVaccinationDate(Date vaccinationDate) {
+        this.vaccinationDate = vaccinationDate;
+        return this;
+    }
+
+    public boolean isCastrated() {
+        return isCastrated;
+    }
+
+    public AnimalEntity setCastrated(boolean castrated) {
+        isCastrated = castrated;
+        return this;
+    }
+
+    public boolean isDewormed() {
+        return isDewormed;
+    }
+
+    public AnimalEntity setDewormed(boolean dewormed) {
+        isDewormed = dewormed;
+        return this;
+    }
+
+    public Date getDewromingDate() {
+        return dewromingDate;
+    }
+
+    public AnimalEntity setDewromingDate(Date dewromingDate) {
+        this.dewromingDate = dewromingDate;
+        return this;
+    }
 
     public List<ManipulationEntity> getManipulations() {
         return manipulations;
