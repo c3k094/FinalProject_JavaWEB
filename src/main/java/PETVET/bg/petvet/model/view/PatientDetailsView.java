@@ -2,7 +2,10 @@ package PETVET.bg.petvet.model.view;
 
 import PETVET.bg.petvet.model.entity.ManipulationEntity;
 import PETVET.bg.petvet.model.entity.OwnerEntity;
+import PETVET.bg.petvet.model.entity.enums.DewormingType;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +19,86 @@ public class PatientDetailsView {
     private String breed;
     private List<ManipulationEntity> manipulations;
 
+    private Date vaccinationDate;
+
+    private boolean vaccinated;
+
+    private String vaccine;
+
+    private boolean isCastrated;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    private boolean isDewormed;
+
+    private DewormingType dewormingType;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    private Date dewormingDate;
+
     public PatientDetailsView() {
+    }
+
+    public boolean isVaccinated() {
+        return vaccinated;
+    }
+
+    public PatientDetailsView setVaccinated(boolean vaccinated) {
+        this.vaccinated = vaccinated;
+        return this;
+    }
+
+    public Date getVaccinationDate() {
+        return vaccinationDate;
+    }
+
+    public PatientDetailsView setVaccinationDate(Date vaccinationDate) {
+        this.vaccinationDate = vaccinationDate;
+        return this;
+    }
+
+    public String getVaccine() {
+        return vaccine;
+    }
+
+    public PatientDetailsView setVaccine(String vaccine) {
+        this.vaccine = vaccine;
+        return this;
+    }
+
+    public boolean isCastrated() {
+        return isCastrated;
+    }
+
+    public PatientDetailsView setCastrated(boolean castrated) {
+        isCastrated = castrated;
+        return this;
+    }
+
+    public boolean isDewormed() {
+        return isDewormed;
+    }
+
+    public PatientDetailsView setDewormed(boolean dewormed) {
+        isDewormed = dewormed;
+        return this;
+    }
+
+    public DewormingType getDewormingType() {
+        return dewormingType;
+    }
+
+    public PatientDetailsView setDewormingType(DewormingType dewormingType) {
+        this.dewormingType = dewormingType;
+        return this;
+    }
+
+    public Date getDewormingDate() {
+        return dewormingDate;
+    }
+
+    public PatientDetailsView setDewormingDate(Date dewormingDate) {
+        this.dewormingDate = dewormingDate;
+        return this;
     }
 
     public Long getId() {

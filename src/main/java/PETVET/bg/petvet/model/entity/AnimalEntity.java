@@ -3,7 +3,6 @@ package PETVET.bg.petvet.model.entity;
 import PETVET.bg.petvet.model.entity.enums.DewormingType;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class AnimalEntity extends BaseEntity{
     private DewormingType dewormingType;
 
     @SuppressWarnings("SpellCheckingInspection")
-    private Date dewromingDate;
+    private Date dewormingDate;
 
     @Column(nullable = false, unique = true)
     private String identificationNumber;
@@ -95,12 +94,12 @@ public class AnimalEntity extends BaseEntity{
         return this;
     }
 
-    public Date getDewromingDate() {
-        return dewromingDate;
+    public Date getDewormingDate() {
+        return dewormingDate;
     }
 
-    public AnimalEntity setDewromingDate(Date dewromingDate) {
-        this.dewromingDate = dewromingDate;
+    public AnimalEntity setDewormingDate(Date dewormingDate) {
+        this.dewormingDate = dewormingDate;
         return this;
     }
 

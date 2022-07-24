@@ -110,7 +110,7 @@
             </div>
 
             <div>
-                <label for="vaccinationDate">Date of deworming:</label>
+                <label for="dewormingDate">Date of deworming:</label>
                 <input type="date" th:field="*{dewormingDate}"  name="dewormingDate"  id="dewormingDate"/>
 
             </div>
@@ -130,6 +130,12 @@
                     </option>
                 </select>
             </div>
+        <div class="form-row">
+            <input type="checkbox" name="castrated" th:field="*{castrated}"
+                   class="form-check-input" id="castrated">
+            <label class="form-check-label" for="castrated">Is the animal castrated</label>
+        </div>
+
         <button type="submit" class="btn btn-primary">Save edits</button>
     </form>
 </div>

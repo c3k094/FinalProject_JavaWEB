@@ -74,7 +74,7 @@ public class PatientService {
                 .setBreed(editPatientDTO.getBreed())
                 .setDewormed(editPatientDTO.isDewormed())
                 .setDewormingType(editPatientDTO.getDewormingType())
-                .setDewromingDate(editPatientDTO.getDewormingDate())
+                .setDewormingDate(editPatientDTO.getDewormingDate())
                 .setCastrated(editPatientDTO.isCastrated());
 
         patientRepository.save(updatedAnimal);

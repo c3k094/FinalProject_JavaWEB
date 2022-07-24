@@ -96,10 +96,17 @@
     <div class="row p-3 ">
 
         <div class="mx-auto col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+            <a th:href="@{/patients/edit/} + ${patientDetails.id}" class="btn btn-primary" style="width:140px">Edit</a>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Delete
+            </button>
+
+            <button class="btn btn-outline-dark pl-3" onclick="document.getElementById('manipulations').scrollIntoView()">View Manipulations</button>
 
 
             <div class="panel panel-info">
-                <div class="panel-heading">
+                <div class="panel-heading pt-5">
                     <h3 class="panel-title">Patient Profile</h3>
                 </div>
                 <div class="panel-body">
@@ -139,17 +146,59 @@
                                 </tr>
 
                                 </tr>
+                                <td>Is vaccinated:</td>
+                                <td th:text="${patientDetails.vaccinated ? 'Yes':'No'}"> Yes/No</td>
 
+                                </tr>
 
+                                </tr>
+                                <th:block th:if="${patientDetails.vaccinated}">
+                                <td>Vaccine details:</td>
+                                <td th:text="${patientDetails.vaccine}"> Vaccine details</td>
+
+                                </tr>
+
+                                </tr>
+
+                                <td>Date of vaccination:</td>
+                                <td th:text="${patientDetails.vaccinationDate}"> Date</td>
+
+                                </tr>
+
+                                </tr>
+                                </th:block>
+
+                                <td>Is dewormed:</td>
+                                <td th:text="${patientDetails.isDewormed ? 'Yes':'No'}"> Yes/No</td>
+
+                                </tr>
+
+                                </tr>
+                                <th:block th:if="${patientDetails.isDewormed}">
+                                <td>Deworming type:</td>
+                                <td th:text="${patientDetails.dewormingType}">Deworming type</td>
+
+                                </tr>
+
+                                </tr>
+                                </th:block>
+                                <th:block th:if="${patientDetails.isDewormed}">
+                                <td>Date of deworming:</td>
+                                <td th:text="${patientDetails.dewormingDate}"> Date</td>
+
+                                </tr>
+
+                                </tr>
+                                    </th:block>
+
+                                <td>Is castrated:</td>
+                                <td th:text="${patientDetails.isCastrated ? 'Yes':'No'}"> Yes/No</td>
+
+                                </tr>
+
+                                </tr>
                                 </tbody>
                             </table>
-
-
-                            <a th:href="@{/patients/edit/} + ${patientDetails.id}" class="btn btn-primary" style="width:140px">Edit</a>
-
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Delete
-                            </button>
 
                         </div>
                     </div>
@@ -162,7 +211,7 @@
 </div>
 <div class="row mx-auto justify-content-md-center">
 
-    <div class="table">
+    <div class="table" id="manipulations">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">

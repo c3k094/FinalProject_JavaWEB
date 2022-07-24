@@ -144,7 +144,7 @@ public class PatientController {
                 .setBreed(addPatientDTO.getBreed())
                 .setDewormed(addPatientDTO.isDewormed())
                 .setDewormingType(addPatientDTO.getDewormingType())
-                .setDewromingDate(addPatientDTO.getDewormingDate())
+                .setDewormingDate(addPatientDTO.getDewormingDate())
                 .setCastrated(addPatientDTO.isCastrated())
                 ;
 
