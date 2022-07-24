@@ -1,8 +1,11 @@
 package PETVET.bg.petvet.service;
 
 import PETVET.bg.petvet.model.dto.AddOwnerDTO;
+import PETVET.bg.petvet.model.dto.EditOwnerDTO;
+import PETVET.bg.petvet.model.dto.EditPatientDTO;
 import PETVET.bg.petvet.model.entity.AddressEntity;
 
+import PETVET.bg.petvet.model.entity.AnimalEntity;
 import PETVET.bg.petvet.model.entity.OwnerEntity;
 import PETVET.bg.petvet.model.view.OwnerDetailsView;
 import PETVET.bg.petvet.model.view.OwnerDropDownView;
@@ -89,5 +92,39 @@ public class OwnerService {
 
     public OwnerDetailsView findOwnerDetailsById(Long id) {
         return modelMapper.map(ownerRepository.findById(id), OwnerDetailsView.class);
+    }
+
+    public void deleteById(Long id) {
+        this.ownerRepository.deleteById(id);
+    }
+
+    public EditOwnerDTO getEditOwnerDTOById(Long id) {
+        return modelMapper.map(ownerRepository.findById(id), EditOwnerDTO.class);
+    }
+
+    public void updateOwner(EditOwnerDTO editOwnerDTO) {
+        OwnerEntity updatedOwner =  this.ownerRepository.findById(editOwnerDTO.getId()).orElseThrow();
+        updatedOwner
+                .setFirstName(editOwnerDTO.getFirstName())
+                .setLastName(editOwnerDTO.getLastName())
+                .setEmail(editOwnerDTO.getEmail())
+                .setPhoneNumber(editOwnerDTO.getPhoneNumber());
+
+        Optional<AddressEntity> optionalAddress =
+                addressService.findByCityAndCountryAndStreet(editOwnerDTO.getCity(),
+                        editOwnerDTO.getCountry(),
+                        editOwnerDTO.getStreet());
+        if(optionalAddress.isEmpty()){
+            AddressEntity address = new AddressEntity().
+                    setCity(editOwnerDTO.getCity()).
+                    setCountry(editOwnerDTO.getCountry()).
+                    setStreet(editOwnerDTO.getStreet()).
+                    setPostcode(editOwnerDTO.getPostcode());
+            updatedOwner.setAddress(address);
+        } else {
+            updatedOwner.setAddress(optionalAddress.get());
+        }
+
+        ownerRepository.save(updatedOwner);
     }
 }

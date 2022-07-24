@@ -20,77 +20,11 @@
 <div class="container-fluid pt-5 mb-4">
     <div class="row" style="height: 4em;"></div>
     <form class="justify-content-center mx-auto"
-          th:action="@{/patients/add} + ${hasOwner ? '?ownerId=' + addPatientDTO.ownerId : ''}"
+          th:action="@{/manipulations/add/} + *{animalId}"
           th:method="post"
-          th:object="${addPatientDTO}">
-        <h2 class="text-center text-black">Patient details:</h2>
+          th:object="${manipulationAddDTO}">
+        <h2 class="text-center text-black">Manipulation details:</h2>
 
-        <div class="row" th:styleappend="${hasOwner} ? 'visibility:hidden' : ''">
-            <div class="form-group col-md-6">
-                <label class="text-center text-black font-weight-bold" for="ownerId">Owner</label>
-                <select id="ownerId"
-                        name="ownerId"
-                        th:errorclass="is-invalid"
-                        class="form-select">
-                    <option value="">Select an owner</option>
-                    <option th:each="e : ${owners}"
-                            th:text="${e.name}"
-                            th:value="${e.id}"
-                            th:selected="${e.id} == *{ownerId}">
-                        Animal owner
-                    </option>
-                </select>
-                <p class="invalid-feedback errors alert alert-danger">
-                    Required field.
-                </p>
-            </div>
-        </div>
-        <div class="form-group col-md-6">
-            <label for="patientName">Patient name</label>
-            <input type="text" th:field="*{name}"
-                   th:errorclass="is-invalid" class="form-control" id="patientName" placeholder="Rodrigo">
-            <p class="invalid-feedback errors alert alert-danger">
-                Name is required and should be between 2 and 20 symbols.
-            </p>
-        </div>
-
-        <div class="form-group col-md-2">
-            <label for="animalType">Animal type</label>
-            <input type="text" th:field="*{animalType}"
-                   th:errorclass="is-invalid" class="form-control" id="animalType" placeholder="Animal type">
-            <p class="invalid-feedback errors alert alert-danger">
-                Animal type is required and should be between 2 and 50 symbols.
-            </p>
-        </div>
-
-        <div class="form-group row">
-
-            <div>
-                <label for="birthdate">Date of birth:</label>
-                <input type="date" th:field="*{birthdate}"  name="birthdate" th:errorclass="is-invalid"  id="birthdate"/>
-                <p class="invalid-feedback errors alert alert-danger">
-                    Date is required and should be in the format dd/MM/yyyy and should be today date or before that.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="animalId">Animal Identification number(from passport)</label>
-                <input type="text" th:field="*{identificationNumber}"
-                       th:errorclass="is-invalid" class="form-control" id="animalId">
-                <p class="invalid-feedback errors alert alert-danger">
-                    ID number is required and should be between 5 and 30 symbols long.
-                </p>
-                <p th:if="${patientExist}" class="errors alert alert-danger">
-                    There already is an animal with this identification number.
-                </p>
-            </div>
-            <div class="form-group col-md-2">
-                <label for="breed">Breed</label>
-                <input type="text" th:field="*{breed}" class="form-control" id="breed">
-            </div>
-        </div>
             <div class="form-row">
                 <input type="checkbox" name="vaccinated" th:field="*{vaccinated}"
                        class="form-check-input" id="vaccinated">

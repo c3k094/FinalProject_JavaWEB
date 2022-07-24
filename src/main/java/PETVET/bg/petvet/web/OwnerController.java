@@ -1,9 +1,12 @@
 package PETVET.bg.petvet.web;
 
 import PETVET.bg.petvet.model.dto.AddOwnerDTO;
+import PETVET.bg.petvet.model.dto.EditOwnerDTO;
+import PETVET.bg.petvet.model.dto.EditPatientDTO;
 import PETVET.bg.petvet.model.dto.UserRegisterDTO;
 import PETVET.bg.petvet.model.entity.OwnerEntity;
 import PETVET.bg.petvet.model.view.OwnerDetailsView;
+import PETVET.bg.petvet.model.view.OwnerDropDownView;
 import PETVET.bg.petvet.model.view.OwnerTableView;
 import PETVET.bg.petvet.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,41 @@ public class OwnerController {
     @GetMapping("/owners/add")
     public String addOwner(){
         return "owner-add";
+    }
+
+    @GetMapping("/owners/delete/{id}")
+    public String delete(@PathVariable Long id){
+        ownerService.deleteById(id);
+        return "redirect:/patients/all";
+    }
+
+    @GetMapping("/owners/edit/{id}")
+    public String editPatient(Model model, @PathVariable Long id) {
+        EditOwnerDTO editOwnerDTO = ownerService.getEditOwnerDTOById(id);
+        editOwnerDTO.setId(id);
+        model.addAttribute("editOwnerDTO",editOwnerDTO);
+        return "owner-edit";
+    }
+
+    @GetMapping("/owners/edit/{id}/error")
+    public String editError(){
+        return "owner-edit";
+    }
+
+    @PostMapping("/owners/edit/{id}")
+    public String addPatient(@Valid EditOwnerDTO editOwnerDTO,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             @PathVariable Long id
+    ){
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("editOwnerDTO", editOwnerDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editOwnerDTO",
+                    bindingResult);
+            return "redirect:/owners/edit/" + id.toString() + "/error";
+        }
+        ownerService.updateOwner(editOwnerDTO);
+        return "redirect:/owners/view/" + id;
     }
 
     @PostMapping("/owners/add")

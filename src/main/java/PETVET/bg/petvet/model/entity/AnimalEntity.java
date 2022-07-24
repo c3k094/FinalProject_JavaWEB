@@ -29,7 +29,7 @@ public class AnimalEntity extends BaseEntity{
 
     @SuppressWarnings("SpellCheckingInspection")
     private boolean isDewormed;
-
+    @Enumerated(EnumType.STRING)
     private DewormingType dewormingType;
 
     @SuppressWarnings("SpellCheckingInspection")

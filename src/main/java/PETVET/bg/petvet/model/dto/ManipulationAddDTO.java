@@ -1,35 +1,35 @@
-package PETVET.bg.petvet.model.entity;
+package PETVET.bg.petvet.model.dto;
 
 import PETVET.bg.petvet.model.entity.enums.DewormingType;
 import PETVET.bg.petvet.model.entity.enums.ManipulationsEnum;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 
-@Entity
-@Table(name = "manipulations")
-public class ManipulationEntity extends BaseEntity {
+public class ManipulationAddDTO {
 
-    @Column(nullable = false)
-    private Date date;
+    @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
+    private Date manipulationDate;
 
-    @Column(columnDefinition = "TEXT")
     private String additionalInformation;
 
-    @ManyToOne
-    private AnimalEntity animal;
+    @NotNull
+    private Long animalId;
 
-    @ManyToOne
-    @JoinColumn(name = "doctor_id")
-    private UserEntity doctor;
+    @NotNull
+    private Long doctorId;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
+    @NotNull
     private ManipulationsEnum manipulation;
 
     private boolean isVaccinated;
 
+    @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date vaccinationDate;
 
     private String vaccine;
@@ -37,21 +37,22 @@ public class ManipulationEntity extends BaseEntity {
     private boolean isCastrated;
 
     private boolean isDewormed;
-    @Enumerated(EnumType.STRING)
+
+    @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private DewormingType dewormingType;
 
-    @SuppressWarnings("SpellCheckingInspection")
     private Date dewormingDate;
 
-    public ManipulationEntity() {
+    public ManipulationAddDTO() {
     }
 
-    public Date getDate() {
-        return date;
+    public Date getManipulationDate() {
+        return manipulationDate;
     }
 
-    public ManipulationEntity setDate(Date date) {
-        this.date = date;
+    public ManipulationAddDTO setManipulationDate(Date manipulationDate) {
+        this.manipulationDate = manipulationDate;
         return this;
     }
 
@@ -59,26 +60,26 @@ public class ManipulationEntity extends BaseEntity {
         return additionalInformation;
     }
 
-    public ManipulationEntity setAdditionalInformation(String additionalInformation) {
+    public ManipulationAddDTO setAdditionalInformation(String additionalInformation) {
         this.additionalInformation = additionalInformation;
         return this;
     }
 
-    public AnimalEntity getAnimal() {
-        return animal;
+    public Long getAnimalId() {
+        return animalId;
     }
 
-    public ManipulationEntity setAnimal(AnimalEntity animal) {
-        this.animal = animal;
+    public ManipulationAddDTO setAnimalId(Long animalId) {
+        this.animalId = animalId;
         return this;
     }
 
-    public UserEntity getDoctor() {
-        return doctor;
+    public Long getDoctorId() {
+        return doctorId;
     }
 
-    public ManipulationEntity setDoctor(UserEntity doctor) {
-        this.doctor = doctor;
+    public ManipulationAddDTO setDoctorId(Long doctorId) {
+        this.doctorId = doctorId;
         return this;
     }
 
@@ -86,7 +87,7 @@ public class ManipulationEntity extends BaseEntity {
         return manipulation;
     }
 
-    public ManipulationEntity setManipulation(ManipulationsEnum manipulation) {
+    public ManipulationAddDTO setManipulation(ManipulationsEnum manipulation) {
         this.manipulation = manipulation;
         return this;
     }
@@ -95,7 +96,7 @@ public class ManipulationEntity extends BaseEntity {
         return isVaccinated;
     }
 
-    public ManipulationEntity setVaccinated(boolean vaccinated) {
+    public ManipulationAddDTO setVaccinated(boolean vaccinated) {
         isVaccinated = vaccinated;
         return this;
     }
@@ -104,7 +105,7 @@ public class ManipulationEntity extends BaseEntity {
         return vaccinationDate;
     }
 
-    public ManipulationEntity setVaccinationDate(Date vaccinationDate) {
+    public ManipulationAddDTO setVaccinationDate(Date vaccinationDate) {
         this.vaccinationDate = vaccinationDate;
         return this;
     }
@@ -113,7 +114,7 @@ public class ManipulationEntity extends BaseEntity {
         return vaccine;
     }
 
-    public ManipulationEntity setVaccine(String vaccine) {
+    public ManipulationAddDTO setVaccine(String vaccine) {
         this.vaccine = vaccine;
         return this;
     }
@@ -122,7 +123,7 @@ public class ManipulationEntity extends BaseEntity {
         return isCastrated;
     }
 
-    public ManipulationEntity setCastrated(boolean castrated) {
+    public ManipulationAddDTO setCastrated(boolean castrated) {
         isCastrated = castrated;
         return this;
     }
@@ -131,7 +132,7 @@ public class ManipulationEntity extends BaseEntity {
         return isDewormed;
     }
 
-    public ManipulationEntity setDewormed(boolean dewormed) {
+    public ManipulationAddDTO setDewormed(boolean dewormed) {
         isDewormed = dewormed;
         return this;
     }
@@ -140,7 +141,7 @@ public class ManipulationEntity extends BaseEntity {
         return dewormingType;
     }
 
-    public ManipulationEntity setDewormingType(DewormingType dewormingType) {
+    public ManipulationAddDTO setDewormingType(DewormingType dewormingType) {
         this.dewormingType = dewormingType;
         return this;
     }
@@ -149,7 +150,7 @@ public class ManipulationEntity extends BaseEntity {
         return dewormingDate;
     }
 
-    public ManipulationEntity setDewormingDate(Date dewormingDate) {
+    public ManipulationAddDTO setDewormingDate(Date dewormingDate) {
         this.dewormingDate = dewormingDate;
         return this;
     }
