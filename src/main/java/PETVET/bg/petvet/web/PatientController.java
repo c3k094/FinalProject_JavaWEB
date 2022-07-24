@@ -3,12 +3,12 @@ package PETVET.bg.petvet.web;
 import PETVET.bg.petvet.model.dto.AddPatientDTO;
 import PETVET.bg.petvet.model.dto.EditPatientDTO;
 import PETVET.bg.petvet.model.entity.AnimalEntity;
-import PETVET.bg.petvet.model.view.OwnerDetailsView;
 import PETVET.bg.petvet.model.view.OwnerDropDownView;
 import PETVET.bg.petvet.model.view.PatientDetailsView;
 import PETVET.bg.petvet.model.view.PatientTableView;
 import PETVET.bg.petvet.service.OwnerService;
 import PETVET.bg.petvet.service.PatientService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +25,13 @@ public class PatientController {
 
     private OwnerService ownerService;
     private PatientService patientService;
+    private ModelMapper modelMapper;
 
     @Autowired
-    public PatientController(OwnerService ownerService, PatientService patientService) {
+    public PatientController(OwnerService ownerService, PatientService patientService, ModelMapper modelMapper) {
         this.ownerService = ownerService;
         this.patientService = patientService;
+        this.modelMapper = modelMapper;
     }
 
     @ModelAttribute("addPatientDTO")
@@ -61,8 +63,10 @@ public class PatientController {
         List<OwnerDropDownView> owners = ownerService.findAll();
         EditPatientDTO editPatientDTO = patientService.getEditPatientDTOById(id);
         editPatientDTO.setId(id);
+        String identID = patientService.findIdentificationNumberById(id);
         model.addAttribute("editPatientDTO",editPatientDTO);
         model.addAttribute("owners", owners);
+        model.addAttribute("identID", identID);
         return "patient-edit";
     }
 
@@ -82,6 +86,33 @@ public class PatientController {
     public String addError(){
         return "patient-add";
     }
+
+    @GetMapping("/patients/edit/{id}/error")
+    public String editError(Model model, @PathVariable Long id){
+        String identID = patientService.findIdentificationNumberById(id);
+
+        model.addAttribute("identID", identID);
+        return "patient-edit";
+    }
+
+    @PostMapping("/patients/edit/{id}")
+    public String addPatient(@Valid EditPatientDTO editPatientDTO,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             @PathVariable Long id
+    ){
+        List<OwnerDropDownView> owners = ownerService.findAll();
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("editPatientDTO", editPatientDTO);
+            redirectAttributes.addFlashAttribute("owners", owners);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.editPatientDTO",
+                    bindingResult);
+            return "redirect:/patients/edit/" + id.toString() + "/error";
+        }
+        patientService.updatePatient(editPatientDTO);
+        return "redirect:/patients/view/" + id;
+    }
+
     @PostMapping("/patients/add")
     public String addPatient(@Valid AddPatientDTO addPatientDTO,
                              BindingResult bindingResult,

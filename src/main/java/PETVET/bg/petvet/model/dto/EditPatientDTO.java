@@ -26,10 +26,6 @@ public class EditPatientDTO {
     @NotNull
     private boolean vaccinated;
 
-    @NotEmpty
-    @Size(min = 5, max = 30)
-    private String identificationNumber;
-
     private String breed;
 
     @NotNull
@@ -81,15 +77,6 @@ public class EditPatientDTO {
 
     public EditPatientDTO setVaccinated(boolean vaccinated) {
         this.vaccinated = vaccinated;
-        return this;
-    }
-
-    public String getIdentificationNumber() {
-        return identificationNumber;
-    }
-
-    public EditPatientDTO setIdentificationNumber(String identificationNumber) {
-        this.identificationNumber = identificationNumber;
         return this;
     }
 

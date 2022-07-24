@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface PatientRepository extends JpaRepository<AnimalEntity, Long> {
 
     Optional<AnimalEntity> findByIdentificationNumber(String identificationNumber);
+
 }

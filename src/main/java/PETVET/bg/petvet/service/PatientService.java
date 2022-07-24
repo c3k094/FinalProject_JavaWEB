@@ -2,7 +2,6 @@ package PETVET.bg.petvet.service;
 
 import PETVET.bg.petvet.model.dto.EditPatientDTO;
 import PETVET.bg.petvet.model.entity.AnimalEntity;
-import PETVET.bg.petvet.model.view.OwnerDetailsView;
 import PETVET.bg.petvet.model.view.PatientDetailsView;
 import PETVET.bg.petvet.model.view.PatientTableView;
 import PETVET.bg.petvet.repository.PatientRepository;
@@ -18,11 +17,13 @@ import java.util.stream.Collectors;
 public class PatientService {
     private PatientRepository patientRepository;
     private ModelMapper modelMapper;
+    private OwnerService ownerService;
 
     @Autowired
-    public PatientService(PatientRepository patientRepository, ModelMapper modelMapper) {
+    public PatientService(PatientRepository patientRepository, ModelMapper modelMapper, OwnerService ownerService) {
         this.patientRepository = patientRepository;
         this.modelMapper = modelMapper;
+        this.ownerService = ownerService;
     }
 
     public Optional<AnimalEntity> findByIdentificationNumber(String identificationNumber) {
@@ -54,5 +55,22 @@ public class PatientService {
 
     public EditPatientDTO getEditPatientDTOById(Long id) {
         return modelMapper.map(patientRepository.findById(id),EditPatientDTO.class);
+    }
+
+    public String findIdentificationNumberById(Long id) {
+        return this.patientRepository.findById(id).orElseThrow().getIdentificationNumber();
+    }
+
+    public void updatePatient(EditPatientDTO editPatientDTO) {
+        AnimalEntity updatedAnimal =  this.patientRepository.findById(editPatientDTO.getId()).orElseThrow();
+        updatedAnimal
+                .setName(editPatientDTO.getName())
+                .setAnimalType(editPatientDTO.getAnimalType())
+                .setVaccinated(editPatientDTO.isVaccinated())
+                .setOwner(ownerService.findById(editPatientDTO.getOwnerId()))
+                .setBirthday(editPatientDTO.getBirthday())
+                .setBreed(editPatientDTO.getBreed());
+
+        patientRepository.save(updatedAnimal);
     }
 }
