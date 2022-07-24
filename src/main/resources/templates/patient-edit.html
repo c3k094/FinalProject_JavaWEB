@@ -75,12 +75,6 @@
         </div>
 
         <div class="form-row">
-            <input type="checkbox" name="vaccinated" th:field="*{vaccinated}"
-                   class="form-check-input" id="vaccinated">
-            <label class="form-check-label" for="vaccinated">Is the animal vaccinated</label>
-        </div>
-
-        <div class="form-row">
             <div class="form-group col-md-6">
                 <h4>Animal Identification number(from passport)</h4>
                 <p th:text="${identID}">ID</p>
@@ -90,6 +84,52 @@
                 <input type="text" th:field="*{breed}" class="form-control" id="breed">
             </div>
         </div>
+
+        <div class="form-row">
+            <input type="checkbox" name="vaccinated" th:field="*{vaccinated}"
+                   class="form-check-input" id="vaccinated">
+            <label class="form-check-label" for="vaccinated">Is the animal vaccinated</label>
+        </div>
+
+        <div>
+            <label for="vaccinationDate">Date of vaccination:</label>
+            <input type="date" th:field="*{vaccinationDate}"  name="vaccinationDate"  id="vaccinationDate"/>
+
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="vaccine">Vaccine</label>
+            <input type="text" th:field="*{vaccine}"
+                   class="form-control" id="vaccine" placeholder="Vaccine information">
+        </div>
+        
+            <div class="form-row">
+                <input type="checkbox" name="dewormed" th:field="*{dewormed}"
+                       class="form-check-input" id="dewormed">
+                <label class="form-check-label" for="dewormed">Is the animal dewormed</label>
+            </div>
+
+            <div>
+                <label for="vaccinationDate">Date of deworming:</label>
+                <input type="date" th:field="*{dewormingDate}"  name="dewormingDate"  id="dewormingDate"/>
+
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="text-center text-black font-weight-bold" for="ownerId">Type of Deworming</label>
+                <select id="dewormingType"
+                        name="dewormingType"
+                        th:errorclass="is-invalid"
+                        class="form-select">
+                    <option value="">Deworming Type</option>
+                    <option th:each="e : ${T(PETVET.bg.petvet.model.entity.enums.DewormingType).values()}"
+                            th:text="${e}"
+                            th:value="${e}"
+                            th:selected="${e} == *{dewormingType}">
+                        Deworming type
+                    </option>
+                </select>
+            </div>
         <button type="submit" class="btn btn-primary">Save edits</button>
     </form>
 </div>

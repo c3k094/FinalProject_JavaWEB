@@ -3,12 +3,22 @@ package PETVET.bg.petvet.model.view;
 import java.util.Date;
 
 public class AnimalCardView {
+    private String id;
     private String name;
     private String animalType;
     private Date birthday;
     private String identificationNumber;
 
     public AnimalCardView() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public AnimalCardView setId(String id) {
+        this.id = id;
+        return this;
     }
 
     public String getName() {

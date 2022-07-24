@@ -1,5 +1,6 @@
 package PETVET.bg.petvet.model.dto;
 
+import PETVET.bg.petvet.model.entity.enums.DewormingType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
@@ -31,6 +32,24 @@ public class EditPatientDTO {
     @NotNull
     private Long ownerId;
 
+    @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date vaccinationDate;
+
+    private String vaccine;
+
+    private boolean isCastrated;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    private boolean isDewormed;
+
+    private DewormingType dewormingType;
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dewormingDate;
+
 
     public EditPatientDTO() {
     }
@@ -41,6 +60,60 @@ public class EditPatientDTO {
 
     public EditPatientDTO setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public Date getVaccinationDate() {
+        return vaccinationDate;
+    }
+
+    public EditPatientDTO setVaccinationDate(Date vaccinationDate) {
+        this.vaccinationDate = vaccinationDate;
+        return this;
+    }
+
+    public String getVaccine() {
+        return vaccine;
+    }
+
+    public EditPatientDTO setVaccine(String vaccine) {
+        this.vaccine = vaccine;
+        return this;
+    }
+
+    public boolean isCastrated() {
+        return isCastrated;
+    }
+
+    public EditPatientDTO setCastrated(boolean castrated) {
+        isCastrated = castrated;
+        return this;
+    }
+
+    public boolean isDewormed() {
+        return isDewormed;
+    }
+
+    public EditPatientDTO setDewormed(boolean dewormed) {
+        isDewormed = dewormed;
+        return this;
+    }
+
+    public DewormingType getDewormingType() {
+        return dewormingType;
+    }
+
+    public EditPatientDTO setDewormingType(DewormingType dewormingType) {
+        this.dewormingType = dewormingType;
+        return this;
+    }
+
+    public Date getDewormingDate() {
+        return dewormingDate;
+    }
+
+    public EditPatientDTO setDewormingDate(Date dewormingDate) {
+        this.dewormingDate = dewormingDate;
         return this;
     }
 

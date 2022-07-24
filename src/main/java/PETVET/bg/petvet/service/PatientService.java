@@ -67,9 +67,15 @@ public class PatientService {
                 .setName(editPatientDTO.getName())
                 .setAnimalType(editPatientDTO.getAnimalType())
                 .setVaccinated(editPatientDTO.isVaccinated())
+                .setVaccine(editPatientDTO.getVaccine())
+                .setVaccinationDate(editPatientDTO.getVaccinationDate())
                 .setOwner(ownerService.findById(editPatientDTO.getOwnerId()))
                 .setBirthday(editPatientDTO.getBirthday())
-                .setBreed(editPatientDTO.getBreed());
+                .setBreed(editPatientDTO.getBreed())
+                .setDewormed(editPatientDTO.isDewormed())
+                .setDewormingType(editPatientDTO.getDewormingType())
+                .setDewromingDate(editPatientDTO.getDewormingDate())
+                .setCastrated(editPatientDTO.isCastrated());
 
         patientRepository.save(updatedAnimal);
     }
