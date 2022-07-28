@@ -30,7 +30,7 @@ public class ManipulationAddDTO {
 
     @PastOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date vaccinationDate;
+    private Date animalVaccinationDate;
 
     private String vaccine;
 
@@ -42,7 +42,9 @@ public class ManipulationAddDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private DewormingType dewormingType;
 
-    private Date dewormingDate;
+    @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date animalDewormingDate;
 
     public ManipulationAddDTO() {
     }
@@ -101,12 +103,12 @@ public class ManipulationAddDTO {
         return this;
     }
 
-    public Date getVaccinationDate() {
-        return vaccinationDate;
+    public Date getAnimalVaccinationDate() {
+        return animalVaccinationDate;
     }
 
-    public ManipulationAddDTO setVaccinationDate(Date vaccinationDate) {
-        this.vaccinationDate = vaccinationDate;
+    public ManipulationAddDTO setAnimalVaccinationDate(Date animalVaccinationDate) {
+        this.animalVaccinationDate = animalVaccinationDate;
         return this;
     }
 
@@ -146,12 +148,12 @@ public class ManipulationAddDTO {
         return this;
     }
 
-    public Date getDewormingDate() {
-        return dewormingDate;
+    public Date getAnimalDewormingDate() {
+        return animalDewormingDate;
     }
 
-    public ManipulationAddDTO setDewormingDate(Date dewormingDate) {
-        this.dewormingDate = dewormingDate;
+    public ManipulationAddDTO setAnimalDewormingDate(Date animalDewormingDate) {
+        this.animalDewormingDate = animalDewormingDate;
         return this;
     }
 }

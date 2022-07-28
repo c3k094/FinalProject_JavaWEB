@@ -3,3 +3,10 @@ $ (".btn").on("click",function(ev){
     $ ("#petContainer").scrollIntoView();
 
 });
+
+$( document ).ready(function() {
+    $("#manipulation").on('change', function(){
+        $ (".block").hide();
+        $ ("#block-" + $(this).val()).show();
+    }).trigger('change');
+});

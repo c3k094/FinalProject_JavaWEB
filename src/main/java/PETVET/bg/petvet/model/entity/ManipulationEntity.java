@@ -4,7 +4,6 @@ import PETVET.bg.petvet.model.entity.enums.DewormingType;
 import PETVET.bg.petvet.model.entity.enums.ManipulationsEnum;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -12,7 +11,7 @@ import java.util.Date;
 public class ManipulationEntity extends BaseEntity {
 
     @Column(nullable = false)
-    private Date date;
+    private Date manipulationDate;
 
     @Column(columnDefinition = "TEXT")
     private String additionalInformation;
@@ -30,7 +29,7 @@ public class ManipulationEntity extends BaseEntity {
 
     private boolean isVaccinated;
 
-    private Date vaccinationDate;
+    private Date animalVaccinationDate;
 
     private String vaccine;
 
@@ -41,17 +40,17 @@ public class ManipulationEntity extends BaseEntity {
     private DewormingType dewormingType;
 
     @SuppressWarnings("SpellCheckingInspection")
-    private Date dewormingDate;
+    private Date animalDewormingDate;
 
     public ManipulationEntity() {
     }
 
-    public Date getDate() {
-        return date;
+    public Date getManipulationDate() {
+        return manipulationDate;
     }
 
-    public ManipulationEntity setDate(Date date) {
-        this.date = date;
+    public ManipulationEntity setManipulationDate(Date manipulationDate) {
+        this.manipulationDate = manipulationDate;
         return this;
     }
 
@@ -100,12 +99,12 @@ public class ManipulationEntity extends BaseEntity {
         return this;
     }
 
-    public Date getVaccinationDate() {
-        return vaccinationDate;
+    public Date getAnimalVaccinationDate() {
+        return animalVaccinationDate;
     }
 
-    public ManipulationEntity setVaccinationDate(Date vaccinationDate) {
-        this.vaccinationDate = vaccinationDate;
+    public ManipulationEntity setAnimalVaccinationDate(Date animalVaccinationDate) {
+        this.animalVaccinationDate = animalVaccinationDate;
         return this;
     }
 
@@ -145,12 +144,12 @@ public class ManipulationEntity extends BaseEntity {
         return this;
     }
 
-    public Date getDewormingDate() {
-        return dewormingDate;
+    public Date getAnimalDewormingDate() {
+        return animalDewormingDate;
     }
 
-    public ManipulationEntity setDewormingDate(Date dewormingDate) {
-        this.dewormingDate = dewormingDate;
+    public ManipulationEntity setAnimalDewormingDate(Date animalDewormingDate) {
+        this.animalDewormingDate = animalDewormingDate;
         return this;
     }
 }
