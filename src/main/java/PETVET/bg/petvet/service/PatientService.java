@@ -80,7 +80,7 @@ public class PatientService {
         patientRepository.save(updatedAnimal);
     }
 
-    public Object findById(Long id) {
-        return this.patientRepository.findById(id);
+    public AnimalEntity findById(Long id) {
+        return this.patientRepository.findById(id).orElseThrow();
     }
 }
