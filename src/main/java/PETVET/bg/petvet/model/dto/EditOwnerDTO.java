@@ -1,7 +1,5 @@
 package PETVET.bg.petvet.model.dto;
 
-import PETVET.bg.petvet.model.entity.AddressEntity;
-
 import javax.validation.constraints.*;
 
 public class EditOwnerDTO {
@@ -22,12 +20,12 @@ public class EditOwnerDTO {
     @Size(min = 10, max = 10)
     private String phoneNumber;
     @NotEmpty
-    private String country;
+    private String addressCountry;
     @NotEmpty
-    private String city;
+    private String addressCity;
     @NotEmpty
-    private String street;
-    private String postcode;
+    private String addressStreet;
+    private String addressPostcode;
 
     public EditOwnerDTO() {
     }
@@ -77,39 +75,39 @@ public class EditOwnerDTO {
         return this;
     }
 
-    public String getCountry() {
-        return country;
+    public String getAddressCountry() {
+        return addressCountry;
     }
 
-    public EditOwnerDTO setCountry(String country) {
-        this.country = country;
+    public EditOwnerDTO setAddressCountry(String addressCountry) {
+        this.addressCountry = addressCountry;
         return this;
     }
 
-    public String getCity() {
-        return city;
+    public String getAddressCity() {
+        return addressCity;
     }
 
-    public EditOwnerDTO setCity(String city) {
-        this.city = city;
+    public EditOwnerDTO setAddressCity(String addressCity) {
+        this.addressCity = addressCity;
         return this;
     }
 
-    public String getStreet() {
-        return street;
+    public String getAddressStreet() {
+        return addressStreet;
     }
 
-    public EditOwnerDTO setStreet(String street) {
-        this.street = street;
+    public EditOwnerDTO setAddressStreet(String addressStreet) {
+        this.addressStreet = addressStreet;
         return this;
     }
 
-    public String getPostcode() {
-        return postcode;
+    public String getAddressPostcode() {
+        return addressPostcode;
     }
 
-    public EditOwnerDTO setPostcode(String postcode) {
-        this.postcode = postcode;
+    public EditOwnerDTO setAddressPostcode(String addressPostcode) {
+        this.addressPostcode = addressPostcode;
         return this;
     }
 }

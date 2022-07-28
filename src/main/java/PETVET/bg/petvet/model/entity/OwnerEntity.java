@@ -21,7 +21,7 @@ public class OwnerEntity extends BaseEntity{
     @Column(nullable = false,unique = true)
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
     private List<AnimalEntity> pets;
 
     public OwnerEntity() {}

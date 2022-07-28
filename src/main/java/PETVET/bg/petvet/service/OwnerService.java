@@ -2,10 +2,8 @@ package PETVET.bg.petvet.service;
 
 import PETVET.bg.petvet.model.dto.AddOwnerDTO;
 import PETVET.bg.petvet.model.dto.EditOwnerDTO;
-import PETVET.bg.petvet.model.dto.EditPatientDTO;
 import PETVET.bg.petvet.model.entity.AddressEntity;
 
-import PETVET.bg.petvet.model.entity.AnimalEntity;
 import PETVET.bg.petvet.model.entity.OwnerEntity;
 import PETVET.bg.petvet.model.view.OwnerDetailsView;
 import PETVET.bg.petvet.model.view.OwnerDropDownView;
@@ -111,15 +109,15 @@ public class OwnerService {
                 .setPhoneNumber(editOwnerDTO.getPhoneNumber());
 
         Optional<AddressEntity> optionalAddress =
-                addressService.findByCityAndCountryAndStreet(editOwnerDTO.getCity(),
-                        editOwnerDTO.getCountry(),
-                        editOwnerDTO.getStreet());
+                addressService.findByCityAndCountryAndStreet(editOwnerDTO.getAddressCity(),
+                        editOwnerDTO.getAddressCountry(),
+                        editOwnerDTO.getAddressStreet());
         if(optionalAddress.isEmpty()){
             AddressEntity address = new AddressEntity().
-                    setCity(editOwnerDTO.getCity()).
-                    setCountry(editOwnerDTO.getCountry()).
-                    setStreet(editOwnerDTO.getStreet()).
-                    setPostcode(editOwnerDTO.getPostcode());
+                    setCity(editOwnerDTO.getAddressCity()).
+                    setCountry(editOwnerDTO.getAddressCountry()).
+                    setStreet(editOwnerDTO.getAddressStreet()).
+                    setPostcode(editOwnerDTO.getAddressPostcode());
             updatedOwner.setAddress(address);
         } else {
             updatedOwner.setAddress(optionalAddress.get());

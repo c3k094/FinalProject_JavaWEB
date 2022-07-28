@@ -23,7 +23,7 @@
 
 <div class="container-fluid pt-5 mb-4">
     <div class="row" style="height: 4em;"></div>
-    <form class="justify-content-center mx-auto" th:action="@{owners/edit/} + ${editOwnerDTO.id}"
+    <form class="justify-content-center mx-auto" th:action="@{/owners/edit/} + ${editOwnerDTO.id}"
           th:method="post"
           th:object="${editOwnerDTO}">
         <h2 class="text-center text-black">Edit owner details:</h2>
@@ -90,7 +90,7 @@
         </div>
         <div class="form-row">
             <div>
-            <select th:field="*{country}" th:errorclass="is-invalid" class="selectpicker countrypicker"></select>
+            <select th:field="*{addressCountry}" th:data-default="*{addressCountry}" name="addressCountry" th:errorclass="is-invalid" class="selectpicker countrypicker"></select>
             <p class="invalid-feedback errors alert alert-danger">
                 Country is required.
             </p>
@@ -100,21 +100,21 @@
             </div>
             <div class="form-group col-md-2">
                 <label for="city">City</label>
-                <input th:field="*{city}" th:errorclass="is-invalid" type="text" class="form-control" id="city">
+                <input th:field="*{addressCity}" th:errorclass="is-invalid" type="text" class="form-control" id="city">
                 <p class="invalid-feedback errors alert alert-danger">
                     City is required.
                 </p>
             </div>
             <div class="form-group col-md-2">
                 <label for="postcode">Post Code</label>
-                <input th:field="*{postcode}" th:errorclass="is-invalid" type="text" class="form-control" id="postcode">
+                <input th:field="*{addressPostcode}" th:errorclass="is-invalid" type="text" class="form-control" id="postcode">
             </div>
 
         </div>
         <div class="form-row">
         <div class="form-group col-md-4">
             <label for="address">Street Address</label>
-            <input th:field="*{street}" th:errorclass="is-invalid" type="text" class="form-control" id="address">
+            <input th:field="*{addressStreet}" th:errorclass="is-invalid" type="text" class="form-control" id="address">
             <p class="invalid-feedback errors alert alert-danger">
                 Street address is required.
             </p>

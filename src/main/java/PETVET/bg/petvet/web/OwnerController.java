@@ -44,7 +44,7 @@ public class OwnerController {
     @GetMapping("/owners/delete/{id}")
     public String delete(@PathVariable Long id){
         ownerService.deleteById(id);
-        return "redirect:/patients/all";
+        return "redirect:/owners/all";
     }
 
     @GetMapping("/owners/edit/{id}")
@@ -61,7 +61,7 @@ public class OwnerController {
     }
 
     @PostMapping("/owners/edit/{id}")
-    public String addPatient(@Valid EditOwnerDTO editOwnerDTO,
+    public String editPatient(@Valid EditOwnerDTO editOwnerDTO,
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes,
                              @PathVariable Long id
