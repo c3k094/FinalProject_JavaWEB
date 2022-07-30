@@ -91,6 +91,8 @@
 <header id="header" class="fixed-top">
     <div th:replace="fragments/navbar">Navbar</div>
 </header>
+
+<input type="hidden" name="patientId" id="patientId" th:value="${patientDetails.id}">
 <div class="container">
     <div class="row" style="height: 4em;"></div>
     <div class="row p-3 ">
@@ -209,6 +211,8 @@
         </div>
     </div>
 </div>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="row mx-auto justify-content-md-center">
 
     <div class="table" id="manipulations">
@@ -224,25 +228,24 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-striped table-hover">
+            <table id="dtVerticalScrollExample" class="table table-striped table-hover">
                 <thead>
                 <tr>
                     <th>Date</th>
                     <th>Action</th>
                     <th>Doctor's name</th>
-                    <th>Note</th>
+                    <th>Notes</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr th:each="manipulation: ${patientDetails.manipulations}">
-                    <td><span th:text="${manipulation.manipulationDate}">Date</span></td>
-                    <td><span th:text="${manipulation.manipulation}">Action</span></td>
-                    <td><span th:text="${manipulation.doctor.firstName}">Doctor Name</span></td>
-                    <td><span th:text="${manipulation.additionalInformation}">Description</span></td>
-
-
+                <tbody id="manipulationsData">
+                <tr>
+                    <td colspan="5">
+                                Loading... <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only"></span>
+                    </div>
+                    </td>
                 </tr>
-
                 </tbody>
             </table>
         </div>
@@ -266,5 +269,11 @@
         </div>
     </div>
 </div>
+
+<script th:src="@{/js/manipulations.js}"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/manipulationsTable.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"/>
+
 </body>
 </html>

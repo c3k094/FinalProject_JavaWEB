@@ -5,11 +5,15 @@ import PETVET.bg.petvet.model.entity.AnimalEntity;
 import PETVET.bg.petvet.model.entity.ManipulationEntity;
 import PETVET.bg.petvet.model.entity.UserEntity;
 import PETVET.bg.petvet.model.entity.enums.ManipulationsEnum;
+import PETVET.bg.petvet.model.view.ManipulationTableView;
 import PETVET.bg.petvet.repository.ManipulationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ManipulationService {
@@ -66,5 +70,11 @@ public class ManipulationService {
         manipulationEntity.setDoctor(doctor);
 
         manipulationRepository.save(manipulationEntity);
+    }
+
+    public List<ManipulationTableView> getAllManipulationsForPatient(Long patientId) {
+        return manipulationRepository.findAllByAnimalId(patientId)
+                .stream()
+                .map(o ->  modelMapper.map(o,ManipulationTableView.class)).collect(Collectors.toList());
     }
 }
