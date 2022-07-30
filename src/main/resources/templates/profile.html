@@ -1,10 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
+    <div th:replace="fragments/head">Head</div>
+    <style>
+        .gradient-custom {
+/* fallback for old browsers */
+background: #f6d365;
+
+/* Chrome 10-25, Safari 5.1-6 */
+background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
+}
+    </style>
 </head>
 <body>
+<header>
+    <div th:replace="fragments/navbar">Navigation</div>
+</header>
 
+
+<section class="vh-100" style="background-color: #f4f5f7;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-6 mb-4 mb-lg-0">
+                <div class="card mb-3" style="border-radius: .5rem;">
+                    <div class="row g-0">
+                        <div class="col-md-4 gradient-custom text-center text-white"
+                             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                            <img th:src="${user.imageUrl}"  alt="Avatar" class="img-fluid my-5" style="width: 100px;" onerror="this.onerror=null;this.src='/images/docAvatar.png';"/>
+                            <h5 th:text="${user.firstName + ' ' + user.lastName}">Name</h5>
+                            <i class="far fa-edit mb-5"></i>
+                            <div class="d-flex justify-content-center py-3">
+                                <a class="btn btn-primary" th:href="@{/users/profile/edit}">Edit</a>
+                            </div>
+                            <div class="d-flex justify-content-center pb-3">
+                                <a th:href="@{/users/password-change}"  class="btn btn-secondary">Change password</a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body p-4">
+                                <h6>Personal Information</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>Email</h6>
+                                        <p class="text-muted" th:text="${user.email}">email@example.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div class="container-fluid pt-5 mb-4">
+    <div class="row" style="height: 2em;"></div>
+
+    <section>
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-6 mb-4 mb-lg-0">
+                    <div class="card mb-3" style="border-radius: .5rem;">
+                        <div class="row g-0">
+                            <div class="text-center text-white bg-secondary bg-opacity-50"
+                                 style="border-top-left-radius: .5rem; border-top-right-radius: .5rem;">
+                                <div class="my-3">
+                                    <img th:src="${user.imageUrl}" class="w-50 img-thumbnail" onerror="this.onerror=null;this.src='/images/docAvatar.png';"/>
+                                </div>
+                                <div class="pb-3 btn-group" role="group">
+                                    <a th:href="@{/users/profile/edit}"  class="btn btn-primary"  role="button">Edit</a>
+                                    <a th:href="@{/users/password-change}"  class="btn btn-secondary">Change password</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-0">
+                            <div>
+                                <div class="card-body p-4">
+                                    <h6>Information</h6>
+                                    <hr class="mt-0 mb-4">
+                                    <div class="row pt-1">
+                                        <div class="col-6 mb-3">
+                                            <h6>First Name</h6>
+                                            <p class="text-muted" th:text=${user.firstName}>First Name</p>
+                                        </div>
+
+                                        <div class="col-6 mb-3">
+                                            <h6>Last Name</h6>
+                                            <p class="text-muted" th:text=${user.lastName}>Last Name</p>
+                                        </div>
+
+                                        <div class="col-6 mb-3">
+                                            <h6>Email</h6>
+                                            <p class="text-muted" th:text=${user.email}>text@example.com</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div th:replace="fragments/footer">Footer</div>
 </body>
 </html>

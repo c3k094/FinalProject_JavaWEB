@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <th:block th:include="~{/fragments/head.html}" />
+</head>
+<body>
+<div class="p-5 text-center bg-image rounded-3" style="
+    background-image: url('https://img1.goodfon.com/wallpaper/nbig/a/7c/cat-veterinarian-feline.jpg');
+    height: 100vh;
+    background-repeat: round;">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-white p-3">
+                <div class="mb-3">Oops something went wrong!</div>
+
+                <p>Even champions miss sometimes. How about we serve you up another page?</p>
+                <a class="btn btn-outline-light btn-lg" href="/" role="button">Go to home page</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -5,7 +5,6 @@ import PETVET.bg.petvet.model.dto.EditPatientDTO;
 import PETVET.bg.petvet.model.entity.AnimalEntity;
 import PETVET.bg.petvet.model.view.OwnerDropDownView;
 import PETVET.bg.petvet.model.view.PatientDetailsView;
-import PETVET.bg.petvet.model.view.PatientTableView;
 import PETVET.bg.petvet.service.OwnerService;
 import PETVET.bg.petvet.service.PatientService;
 import org.modelmapper.ModelMapper;
@@ -60,9 +59,7 @@ public class PatientController {
 
         return "patients";
     }
-       // List<PatientTableView> patients = patientService.findViewAll();
-        //model.addAttribute("patients", patients);
-        //return "patients";
+
     @GetMapping("/patients/delete/{id}")
     public String delete(@PathVariable Long id){
         patientService.deleteById(id);

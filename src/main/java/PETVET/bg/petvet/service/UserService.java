@@ -102,6 +102,8 @@ public class UserService {
     public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
         UserEntity newUser =
                 userMapper.userDtoToUserEntity(userRegisterDTO);
+        newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+
 
         userRepository.save(newUser);
 
