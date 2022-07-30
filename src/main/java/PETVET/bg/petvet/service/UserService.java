@@ -1,5 +1,6 @@
 package PETVET.bg.petvet.service;
 
+import PETVET.bg.petvet.model.dto.UserEditDTO;
 import PETVET.bg.petvet.model.dto.UserRegisterDTO;
 import PETVET.bg.petvet.model.entity.UserEntity;
 import PETVET.bg.petvet.model.entity.UserRoleEntity;
@@ -7,6 +8,7 @@ import PETVET.bg.petvet.model.entity.enums.UserRoleEnum;
 import PETVET.bg.petvet.model.mapper.UserMapper;
 import PETVET.bg.petvet.repository.UserRepository;
 import PETVET.bg.petvet.repository.UserRoleRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,19 +31,21 @@ public class UserService {
     private UserRoleRepository userRoleRepository;
     private String adminPass;
     private UserMapper userMapper;
+    private ModelMapper modelMapper;
 
     @Autowired
     public UserService(UserRepository userRepository,
                        UserRoleRepository userRoleRepository,
                        PasswordEncoder passwordEncoder,
                        UserDetailsService appUserDetailsService,
-                       @Value("${app.default.admin.password}") String adminPass, UserMapper userMapper)  {
+                       @Value("${app.default.admin.password}") String adminPass, UserMapper userMapper, ModelMapper modelMapper)  {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
         this.appUserDetailsService = appUserDetailsService;
         this.adminPass = adminPass;
         this.userMapper = userMapper;
+        this.modelMapper = modelMapper;
     }
 
     public Optional<UserEntity> findByEmail(String email) {
@@ -115,4 +119,47 @@ public class UserService {
                 getContext().
                 setAuthentication(auth);
     }
+
+    private void updateAuthentication(UserEntity newUser) {
+        UserDetails userDetails =
+                appUserDetailsService.loadUserByUsername(newUser.getEmail());
+
+        Authentication auth =
+                new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        userDetails.getPassword(),
+                        userDetails.getAuthorities()
+                );
+
+        SecurityContextHolder.
+                getContext().
+                setAuthentication(auth);
+    }
+
+
+    public UserEditDTO getEditDetails(String username) {
+        return modelMapper.map(userRepository.findByEmail(username).orElse(null), UserEditDTO.class);
+    }
+
+    public void update(UserEditDTO userEditDTO) {
+
+        UserEntity newUser = userRepository.findByEmail(userEditDTO.getEmail()).orElse(null)
+                .setFirstName(userEditDTO.getFirstName())
+                .setLastName(userEditDTO.getLastName())
+                .setImageUrl(userEditDTO.getImageUrl());
+        userRepository.save(newUser);
+        updateAuthentication(newUser);
+    }
+
+    public void deleteByEmail(String username) {
+        userRepository.deleteByEmail(username);
+        SecurityContextHolder.clearContext();
+    }
+
+    public void updatePassword(String email,String newPassword) {
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow();
+        userEntity.setPassword(passwordEncoder.encode(newPassword));
+        updateAuthentication(userEntity);
+    }
+
 }
