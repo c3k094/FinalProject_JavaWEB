@@ -28,14 +28,16 @@ public class ManipulationController {
     }
 
     @GetMapping("/add/{id}")
-    public String addManipulation(Model model, @PathVariable Long id) {
-        ManipulationAddDTO manipulationAddDTO = manipulationService.initializeManipulation(id);
+    public String addManipulation(Model model, @PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        ManipulationAddDTO manipulationAddDTO = manipulationService.initializeManipulation(id,userDetails);
         model.addAttribute("manipulationAddDTO",manipulationAddDTO);
         return "manipulations-add";
     }
 
-    @GetMapping("/add//{id}/error")
-    public String add(@PathVariable Long id) {
+    @GetMapping("/add/{id}/error")
+    public String add(Model model, @PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        ManipulationAddDTO manipulationAddDTO = manipulationService.initializeManipulation(id,userDetails);
+        model.addAttribute("manipulationAddDTO",manipulationAddDTO);
         return "manipulations-add";
     }
 
@@ -49,11 +51,11 @@ public class ManipulationController {
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("manipulationAddDTO",manipulationAddDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.manipulationAddDTO", bindingResult);
-            return "redirect:/add/" + id + "/error";
+            return "redirect:/manipulations/add/" + id + "/error";
         }
 
         manipulationService.addManipulation(manipulationAddDTO,id,userDetails);
 
-        return "redirect:/beehives/view/" + id;
+        return "redirect:/patients/view/" + id;
     }
 }

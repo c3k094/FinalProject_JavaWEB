@@ -73,14 +73,34 @@
                     </div>
                     <div class="d-flex justify-content-center">
                         <ul class="pagination mt-3 mb-0">
-                            <li class="disabled page-item"><a href="#" class="page-link">‹</a></li>
-                            <li class="active page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link">›</a></li>
-                            <li class="page-item"><a href="#" class="page-link">»</a></li>
+
+                            <li class="page-item" th:classappend="${owners.isFirst()} ? 'disabled' : ''">
+                                <a th:unless="${owners.isFirst()}"
+                                   th:href="@{/owners/all(size=${owners.getSize()},page=0)}"
+                                   class="page-link" href="#">First</a>
+                                <a th:if="${owners.isFirst()}"
+                                   class="page-link" href="#">First</a>
+                            </li>
+
+                            <li class="page-item" th:classappend="${owners.hasPrevious() ? '' : 'disabled'}">
+                                <a th:if="${owners.hasPrevious()}"
+                                   th:href="@{/owners/all(size=${owners.getSize()},page=${owners.getNumber() - 1})}"
+                                   class="page-link" href="#">Previous</a>
+                                <a th:unless="${owners.hasPrevious()}"
+                                   class="page-link" href="#">Previous</a>
+                            </li>
+
+                            <li class="page-item" th:classappend="${owners.hasNext() ? '' : 'disabled'}">
+                                <a th:if="${owners.hasNext()}"
+                                   th:href="@{/owners/all(size=${owners.getSize()},page=${owners.getNumber() + 1})}"
+                                   class="page-link" href="#">Next</a>
+                                <a th:unless="${owners.hasNext()}"
+                                   class="page-link" href="#">Next</a>
+                            </li>
+                            <li class="page-item" th:classappend="${owners.isLast()} ? 'disabled' : ''">
+                                <a th:unless="${owners.isLast()}"
+                                   th:href="@{/owners/all(size=${owners.getSize()},page=${owners.getTotalPages() - 1})}" class="page-link">Last</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

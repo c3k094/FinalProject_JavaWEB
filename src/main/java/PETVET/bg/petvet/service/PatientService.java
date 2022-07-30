@@ -7,6 +7,8 @@ import PETVET.bg.petvet.model.view.PatientTableView;
 import PETVET.bg.petvet.repository.PatientRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,15 +36,15 @@ public class PatientService {
         patientRepository.save(newPatient);
     }
 
-    public List<PatientTableView> findViewAll() {
-        return this.patientRepository.findAll().stream()
+    public Page<PatientTableView> findViewAll(Pageable pageable) {
+        return this.patientRepository.findAll(pageable)
                 .map(o -> new PatientTableView()
                         .setId(o.getId())
                         .setName(o.getName())
                         .setAnimalType(o.getAnimalType())
                         .setBirthday(o.getBirthday())
                         .setIdentificationNumber(o.getIdentificationNumber())
-                        .setOwner(o.getOwner())).collect(Collectors.toList());
+                        .setOwner(o.getOwner()));
     }
 
     public PatientDetailsView findPatientDetailsById(Long id) {

@@ -17,10 +17,8 @@ public class ManipulationAddDTO {
 
     private String additionalInformation;
 
-    @NotNull
     private Long animalId;
 
-    @NotNull
     private Long doctorId;
 
     @NotNull
@@ -38,8 +36,6 @@ public class ManipulationAddDTO {
 
     private boolean isDewormed;
 
-    @PastOrPresent
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private DewormingType dewormingType;
 
     @PastOrPresent

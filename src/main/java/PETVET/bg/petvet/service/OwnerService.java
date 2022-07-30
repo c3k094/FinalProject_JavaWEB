@@ -11,6 +11,8 @@ import PETVET.bg.petvet.model.view.OwnerTableView;
 import PETVET.bg.petvet.repository.OwnerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -78,14 +80,14 @@ public class OwnerService {
         return ownerRepository.findById(ownerId).orElse(null);
     }
 
-    public List<OwnerTableView> findViewAll() {
-        return ownerRepository.findAll().stream()
+    public Page<OwnerTableView> findViewAll(Pageable pageable) {
+        return ownerRepository.findAll(pageable)
                 .map(o -> new OwnerTableView()
                         .setId(o.getId())
                         .setFirstName(o.getFirstName())
                         .setLastName(o.getLastName())
                         .setPhoneNumber(o.getPhoneNumber())
-                        .setEmail(o.getEmail())).collect(Collectors.toList());
+                        .setEmail(o.getEmail()));
     }
 
     public OwnerDetailsView findOwnerDetailsById(Long id) {

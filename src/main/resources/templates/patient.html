@@ -235,8 +235,8 @@
                 </thead>
                 <tbody>
                 <tr th:each="manipulation: ${patientDetails.manipulations}">
-                    <td><span th:text="${manipulation.date}">Date</span></td>
-                    <td><span th:text="${manipulation.type}">Action</span></td>
+                    <td><span th:text="${manipulation.manipulationDate}">Date</span></td>
+                    <td><span th:text="${manipulation.manipulation}">Action</span></td>
                     <td><span th:text="${manipulation.doctor.firstName}">Doctor Name</span></td>
                     <td><span th:text="${manipulation.additionalInformation}">Description</span></td>
 

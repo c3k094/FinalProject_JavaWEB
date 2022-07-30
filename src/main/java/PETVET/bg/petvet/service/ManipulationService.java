@@ -26,8 +26,21 @@ public class ManipulationService {
         this.manipulationRepository = manipulationRepository;
     }
 
-    public ManipulationAddDTO initializeManipulation(Long id) {
-        return modelMapper.map(patientService.findById(id), ManipulationAddDTO.class);
+    public ManipulationAddDTO initializeManipulation(Long id, UserDetails userDetails) {
+        AnimalEntity animal = patientService.findById(id);
+        ManipulationAddDTO newManipulation = new ManipulationAddDTO();
+        newManipulation
+                .setCastrated(animal.isCastrated())
+                .setDewormed(animal.isDewormed())
+                .setVaccinated(animal.isVaccinated())
+                .setVaccine(animal.getVaccine())
+                .setAnimalVaccinationDate(animal.getVaccinationDate())
+                .setDewormingType(animal.getDewormingType())
+                .setAnimalDewormingDate(animal.getDewormingDate())
+                .setAnimalId(animal.getId())
+                .setDoctorId(userService.findByEmail(userDetails.getUsername()).get().getId());
+
+        return newManipulation;
     }
 
     public void addManipulation(ManipulationAddDTO manipulationAddDTO, Long id, UserDetails userDetails) {

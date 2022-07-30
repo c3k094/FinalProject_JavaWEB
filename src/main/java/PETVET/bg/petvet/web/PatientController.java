@@ -10,6 +10,9 @@ import PETVET.bg.petvet.service.OwnerService;
 import PETVET.bg.petvet.service.PatientService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,11 +50,19 @@ public class PatientController {
     }
 
     @GetMapping("/patients/all")
-    public String allPatients(Model model){
-        List<PatientTableView> patients = patientService.findViewAll();
-        model.addAttribute("patients", patients);
+    public String allPatients(Model model,@PageableDefault(
+            sort = "owner.firstName",
+            direction = Sort.Direction.ASC,
+            page = 0,
+            size = 7) Pageable pageable) {
+
+        model.addAttribute("patients", patientService.findViewAll(pageable));
+
         return "patients";
     }
+       // List<PatientTableView> patients = patientService.findViewAll();
+        //model.addAttribute("patients", patients);
+        //return "patients";
     @GetMapping("/patients/delete/{id}")
     public String delete(@PathVariable Long id){
         patientService.deleteById(id);

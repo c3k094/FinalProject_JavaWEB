@@ -10,6 +10,9 @@ import PETVET.bg.petvet.model.view.OwnerDropDownView;
 import PETVET.bg.petvet.model.view.OwnerTableView;
 import PETVET.bg.petvet.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -97,9 +100,13 @@ public class OwnerController {
     }
 
     @GetMapping("/owners/all")
-    public String allOwners(Model model){
-        List<OwnerTableView> owners = ownerService.findViewAll();
-        model.addAttribute("owners", owners);
+    public String allOwners(Model model,@PageableDefault(
+            sort = "firstName",
+            direction = Sort.Direction.ASC,
+            page = 0,
+            size = 7) Pageable pageable){
+
+        model.addAttribute("owners", ownerService.findViewAll(pageable));
         return "owners";
     }
 
