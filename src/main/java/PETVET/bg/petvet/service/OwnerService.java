@@ -5,6 +5,7 @@ import PETVET.bg.petvet.model.dto.EditOwnerDTO;
 import PETVET.bg.petvet.model.entity.AddressEntity;
 
 import PETVET.bg.petvet.model.entity.OwnerEntity;
+import PETVET.bg.petvet.model.exception.NotFoundException;
 import PETVET.bg.petvet.model.view.OwnerDetailsView;
 import PETVET.bg.petvet.model.view.OwnerDropDownView;
 import PETVET.bg.petvet.model.view.OwnerTableView;
@@ -77,7 +78,7 @@ public class OwnerService {
     }
 
     public OwnerEntity findById(Long ownerId) {
-        return ownerRepository.findById(ownerId).orElse(null);
+        return ownerRepository.findById(ownerId).orElseThrow(() -> new NotFoundException("There is no such owner!"));
     }
 
     public Page<OwnerTableView> findViewAll(Pageable pageable) {
@@ -91,7 +92,7 @@ public class OwnerService {
     }
 
     public OwnerDetailsView findOwnerDetailsById(Long id) {
-        return modelMapper.map(ownerRepository.findById(id), OwnerDetailsView.class);
+        return modelMapper.map(ownerRepository.findById(id).orElseThrow(() -> new NotFoundException("There is no such owner!")), OwnerDetailsView.class);
     }
 
     public void deleteById(Long id) {
@@ -99,11 +100,11 @@ public class OwnerService {
     }
 
     public EditOwnerDTO getEditOwnerDTOById(Long id) {
-        return modelMapper.map(ownerRepository.findById(id), EditOwnerDTO.class);
+        return modelMapper.map(ownerRepository.findById(id).orElseThrow(() -> new NotFoundException("There is no such owner!")), EditOwnerDTO.class);
     }
 
     public void updateOwner(EditOwnerDTO editOwnerDTO) {
-        OwnerEntity updatedOwner =  this.ownerRepository.findById(editOwnerDTO.getId()).orElseThrow();
+        OwnerEntity updatedOwner =  this.ownerRepository.findById(editOwnerDTO.getId()).orElseThrow(() -> new NotFoundException("There is no such owner! You cannot save changes!"));
         updatedOwner
                 .setFirstName(editOwnerDTO.getFirstName())
                 .setLastName(editOwnerDTO.getLastName())

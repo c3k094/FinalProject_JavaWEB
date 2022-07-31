@@ -2,6 +2,7 @@ package PETVET.bg.petvet.service;
 
 import PETVET.bg.petvet.model.dto.EditPatientDTO;
 import PETVET.bg.petvet.model.entity.AnimalEntity;
+import PETVET.bg.petvet.model.exception.NotFoundException;
 import PETVET.bg.petvet.model.view.PatientDetailsView;
 import PETVET.bg.petvet.model.view.PatientTableView;
 import PETVET.bg.petvet.repository.PatientRepository;
@@ -48,7 +49,7 @@ public class PatientService {
     }
 
     public PatientDetailsView findPatientDetailsById(Long id) {
-        return modelMapper.map(patientRepository.findById(id), PatientDetailsView.class);
+        return modelMapper.map(patientRepository.findById(id).orElseThrow(() -> new NotFoundException("There is no such patient found!")), PatientDetailsView.class);
     }
 
     public void deleteById(Long id) {
@@ -60,11 +61,11 @@ public class PatientService {
     }
 
     public String findIdentificationNumberById(Long id) {
-        return this.patientRepository.findById(id).orElseThrow().getIdentificationNumber();
+        return this.patientRepository.findById(id).orElseThrow(() -> new NotFoundException("We cannot find the identification number for this patient, as such patient actually exist!")).getIdentificationNumber();
     }
 
     public void updatePatient(EditPatientDTO editPatientDTO) {
-        AnimalEntity updatedAnimal =  this.patientRepository.findById(editPatientDTO.getId()).orElseThrow();
+        AnimalEntity updatedAnimal =  this.patientRepository.findById(editPatientDTO.getId()).orElseThrow(() -> new NotFoundException("There is no such patient!"));
         updatedAnimal
                 .setName(editPatientDTO.getName())
                 .setAnimalType(editPatientDTO.getAnimalType())
@@ -83,6 +84,6 @@ public class PatientService {
     }
 
     public AnimalEntity findById(Long id) {
-        return this.patientRepository.findById(id).orElseThrow();
+        return this.patientRepository.findById(id).orElseThrow(() -> new NotFoundException("There is no such patient!"));
     }
 }

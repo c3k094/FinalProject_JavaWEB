@@ -5,6 +5,7 @@ import PETVET.bg.petvet.model.entity.AnimalEntity;
 import PETVET.bg.petvet.model.entity.ManipulationEntity;
 import PETVET.bg.petvet.model.entity.UserEntity;
 import PETVET.bg.petvet.model.entity.enums.ManipulationsEnum;
+import PETVET.bg.petvet.model.exception.NotFoundException;
 import PETVET.bg.petvet.model.view.ManipulationTableView;
 import PETVET.bg.petvet.repository.ManipulationRepository;
 import org.modelmapper.ModelMapper;
@@ -42,7 +43,7 @@ public class ManipulationService {
                 .setDewormingType(animal.getDewormingType())
                 .setAnimalDewormingDate(animal.getDewormingDate())
                 .setAnimalId(animal.getId())
-                .setDoctorId(userService.findByEmail(userDetails.getUsername()).get().getId());
+                .setDoctorId(userService.findByEmail(userDetails.getUsername()).getId());
 
         return newManipulation;
     }
@@ -66,7 +67,7 @@ public class ManipulationService {
 
         ManipulationEntity manipulationEntity = modelMapper.map(manipulationAddDTO, ManipulationEntity.class);
         manipulationEntity.setAnimal(patient);
-        UserEntity doctor = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+        UserEntity doctor = userService.findByEmail(userDetails.getUsername());
         manipulationEntity.setDoctor(doctor);
 
         manipulationRepository.save(manipulationEntity);

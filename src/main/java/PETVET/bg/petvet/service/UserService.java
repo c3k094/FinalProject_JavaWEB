@@ -5,6 +5,7 @@ import PETVET.bg.petvet.model.dto.UserRegisterDTO;
 import PETVET.bg.petvet.model.entity.UserEntity;
 import PETVET.bg.petvet.model.entity.UserRoleEntity;
 import PETVET.bg.petvet.model.entity.enums.UserRoleEnum;
+import PETVET.bg.petvet.model.exception.NotFoundException;
 import PETVET.bg.petvet.model.mapper.UserMapper;
 import PETVET.bg.petvet.repository.UserRepository;
 import PETVET.bg.petvet.repository.UserRoleRepository;
@@ -48,8 +49,8 @@ public class UserService {
         this.modelMapper = modelMapper;
     }
 
-    public Optional<UserEntity> findByEmail(String email) {
-        return this.userRepository.findByEmail(email);
+    public UserEntity findByEmail(String email) {
+        return this.userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found!"));
     }
 
     public void init() {
@@ -140,12 +141,12 @@ public class UserService {
 
 
     public UserEditDTO getEditDetails(String username) {
-        return modelMapper.map(userRepository.findByEmail(username).orElse(null), UserEditDTO.class);
+        return modelMapper.map(userRepository.findByEmail(username).orElseThrow(() -> new NotFoundException("There is no such user!")), UserEditDTO.class);
     }
 
     public void update(UserEditDTO userEditDTO) {
 
-        UserEntity newUser = userRepository.findByEmail(userEditDTO.getEmail()).orElse(null)
+        UserEntity newUser = userRepository.findByEmail(userEditDTO.getEmail()).orElseThrow(() -> new NotFoundException("There is no such user!"))
                 .setFirstName(userEditDTO.getFirstName())
                 .setLastName(userEditDTO.getLastName())
                 .setImageUrl(userEditDTO.getImageUrl());
@@ -159,10 +160,13 @@ public class UserService {
     }
 
     public void updatePassword(String email,String newPassword) {
-        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow();
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("There is no such user!"));
         userEntity.setPassword(passwordEncoder.encode(newPassword));
         updateAuthentication(userEntity);
         userRepository.save(userEntity);
     }
 
+    public boolean isEmailTaken(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
 }
