@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Owners view</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <style>
+    body{
+    margin-top:20px;
+    background:#f8f8f8
+}
+</style>
+</head>
+<body>
+<header id="header" class="fixed-top">
+<div th:replace="fragments/navbar">Navbar</div>
+</header>
+
+<div class="row" style="height: 4em;"></div>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="row flex-lg-nowrap">
+    <div class="col mb-3">
+        <div class="e-panel card">
+            <div class="card-body">
+                <div class="card-title">
+                    <div class="row justify-content-between mx-5">
+                    <h6 class="mr-2"><span>Users</span><small class="px-1">Be a wise admin</small></h6>
+                    </div>
+                </div>
+                <div class="e-table">
+                    <div class="table-responsive table-lg mt-3">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th class="max-width">Picture</th>
+                                <th class="sortable">Name</th>
+                                <th class="sortable">Email</th>
+                                <th class="sortable">Date of last login</th>
+                                <th class="sortable">User roles</th>
+                                <th class="sortable">Is active</th>
+                                <th class="sortable">Is Locked</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user: ${users}">
+                                <td>
+                                    <img th:src="${user.imageUrl}"  alt="Avatar" class="img-fluid my-5" style="width: 100px;" onerror="this.onerror=null;this.src='/images/docAvatar.png';"/>
+                                </td>
+                                <td class="text-nowrap align-middle"><a th:text="${user.firstName + ' ' + user.lastName}" th:href="@{/admins/user/view/} + ${user.id}">Name</a></td>
+                                <td class="text-nowrap align-middle"><span th:text="${user.email}">Email</span></td>
+                                <td class="text-nowrap align-middle"><span th:text="${#temporals.format(user.lastLoginDate, 'dd/MM/yyyy')}">Date</span></td>
+
+                                <td class="text-nowrap align-middle"><div th:each="role: ${user.userRoles}" th:text="${role.userRole}">User role</div></td>
+                                <td class="text-center text-nowrap align-middle"><input type="checkbox" class="form-check-input"
+                                                                        th:checked="${user.isActive}" disabled></td>
+                                <td class="text-center text-nowrap align-middle"><input type="checkbox" class="form-check-input"
+                                                                            th:checked="${user.isLocked}" disabled></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

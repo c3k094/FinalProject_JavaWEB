@@ -12,14 +12,16 @@ public class AppUserDetails implements UserDetails {
     private final String lastName;
     private final Collection<GrantedAuthority> authorities;
     private final boolean isActive;
+    private final boolean isLocked;
 
-    public AppUserDetails(String password, String username, String firstName, String lastName, Collection<GrantedAuthority> authorities, boolean isActive) {
+    public AppUserDetails(String password, String username, String firstName, String lastName, Collection<GrantedAuthority> authorities, boolean isActive, boolean isLocked) {
         this.password = password;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.authorities = authorities;
         this.isActive = isActive;
+        this.isLocked = isLocked;
     }
     public String getFirstName() {
         return firstName;
@@ -71,7 +73,7 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return !isLocked;
     }
 
     @Override

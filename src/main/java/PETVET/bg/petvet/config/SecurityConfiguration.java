@@ -40,7 +40,7 @@ public class SecurityConfiguration {
             // pages available only for moderators
                     antMatchers("/pages/moderators").hasRole(UserRoleEnum.MODERATOR.name()).
             // pages available only for admins
-                    antMatchers("/pages/admins").hasRole(UserRoleEnum.ADMIN.name()).
+                    antMatchers("/admins/*").hasRole(UserRoleEnum.ADMIN.name()).
             // all other pages are available for logger in users
                     anyRequest().
             authenticated().

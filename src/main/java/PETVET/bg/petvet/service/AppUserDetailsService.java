@@ -39,8 +39,8 @@ public class AppUserDetailsService implements UserDetailsService {
                     stream().
                     map(this::map).
                     toList(),
-            userEntity.isActive()
-    );
+            userEntity.isActive(),
+            userEntity.isLocked());
   }
 
   private GrantedAuthority map(UserRoleEntity userRole) {

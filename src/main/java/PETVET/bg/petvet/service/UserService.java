@@ -7,6 +7,7 @@ import PETVET.bg.petvet.model.entity.UserRoleEntity;
 import PETVET.bg.petvet.model.entity.enums.UserRoleEnum;
 import PETVET.bg.petvet.model.exception.NotFoundException;
 import PETVET.bg.petvet.model.mapper.UserMapper;
+import PETVET.bg.petvet.model.view.UserAdminView;
 import PETVET.bg.petvet.repository.UserRepository;
 import PETVET.bg.petvet.repository.UserRoleRepository;
 import org.modelmapper.ModelMapper;
@@ -27,6 +28,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements ApplicationListener<AuthenticationSuccessEvent> {
@@ -193,7 +195,7 @@ public class UserService implements ApplicationListener<AuthenticationSuccessEve
         userRepository.findAll()
                 .forEach(u -> {
                     Duration duration = Duration.between(u.getLastLoginDate(), currTime);
-                    if(duration.toDays() > 90 && u.isActive()) {
+                    if(duration.toDays() > 90 && u.isActive() && !u.getUserRoles().contains(UserRoleEnum.ADMIN)) {
                         u.setActive(false);
                         userRepository.save(u);
                     }
@@ -203,4 +205,10 @@ public class UserService implements ApplicationListener<AuthenticationSuccessEve
 //        System.out.println(
 //                "schedule tasks using cron jobs - " + now);
    }
+
+    public List<UserAdminView> findAllUsersAdminView() {
+        return userRepository.findAll().stream()
+                .map(u -> modelMapper.map(u, UserAdminView.class))
+                .collect(Collectors.toList());
+    }
 }
