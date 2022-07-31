@@ -1,6 +1,10 @@
 package PETVET.bg.petvet.model.entity;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +29,33 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private boolean isActive;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean isLocked;
+
+    private LocalDateTime lastLoginDate;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRoleEntity> userRoles = new ArrayList<>();
 
     public UserEntity() {}
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public UserEntity setLocked(boolean locked) {
+        isLocked = locked;
+        return this;
+    }
+
+    public LocalDateTime getLastLoginDate() {
+        return lastLoginDate;
+    }
+
+    public UserEntity setLastLoginDate(LocalDateTime lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
+        return this;
+    }
 
     public boolean isActive() {
         return isActive;

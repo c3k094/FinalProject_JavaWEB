@@ -12,7 +12,10 @@ import PETVET.bg.petvet.repository.UserRoleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,11 +23,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements ApplicationListener<AuthenticationSuccessEvent> {
 
     private final UserDetailsService appUserDetailsService;
     private UserRepository userRepository;
@@ -103,7 +108,8 @@ public class UserService {
     public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
         UserEntity newUser =
                 userMapper.userDtoToUserEntity(userRegisterDTO);
-        newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+        newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()))
+                        .setLastLoginDate(LocalDateTime.now());
 
 
         userRepository.save(newUser);
@@ -169,4 +175,32 @@ public class UserService {
     public boolean isEmailTaken(String email) {
         return userRepository.findByEmail(email).isPresent();
     }
+
+    @Override
+    public void onApplicationEvent(AuthenticationSuccessEvent event) {
+        String userEmail = ((UserDetails) event.getAuthentication().getPrincipal()).getUsername();
+        userRepository.save(findByEmail(userEmail).setLastLoginDate(LocalDateTime.now()));
+
+    }
+    public boolean isBlocked(String userName) {
+        UserEntity user = findByEmail(userName);
+        return !user.isActive() || user.isLocked();
+    }
+
+    @Scheduled(cron = "0 0 12 * * ?") //10 * * * * ?
+    public void scheduleDeactivateUserAccount() {
+        LocalDateTime currTime = LocalDateTime.now();
+        userRepository.findAll()
+                .forEach(u -> {
+                    Duration duration = Duration.between(u.getLastLoginDate(), currTime);
+                    if(duration.toDays() > 90 && u.isActive()) {
+                        u.setActive(false);
+                        userRepository.save(u);
+                    }
+                });
+
+//        long now = System.currentTimeMillis() / 1000;
+//        System.out.println(
+//                "schedule tasks using cron jobs - " + now);
+   }
 }
