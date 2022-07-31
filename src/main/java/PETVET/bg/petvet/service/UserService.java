@@ -162,6 +162,7 @@ public class UserService {
         UserEntity userEntity = userRepository.findByEmail(email).orElseThrow();
         userEntity.setPassword(passwordEncoder.encode(newPassword));
         updateAuthentication(userEntity);
+        userRepository.save(userEntity);
     }
 
 }
