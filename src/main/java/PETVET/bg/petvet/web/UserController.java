@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    String profile(@AuthenticationPrincipal UserDetails userDetails,
+    public String profile(@AuthenticationPrincipal UserDetails userDetails,
                    Model model) {
         UserEditDTO userEditDTO = userService.getEditDetails(userDetails.getUsername());
         model.addAttribute("user", userEditDTO);
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/profile/edit")
-    String edit(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+     public String edit(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         UserEditDTO userEditDTO = userService.getEditDetails(userDetails.getUsername());
         model.addAttribute("userEditDTO", userEditDTO);
         return "profile-edit";

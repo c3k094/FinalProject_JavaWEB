@@ -44,14 +44,15 @@
                                 <th class="sortable">User roles</th>
                                 <th class="sortable">Is active</th>
                                 <th class="sortable">Is Locked</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="user: ${users}">
-                                <td>
+                                <td class="text-center">
                                     <img th:src="${user.imageUrl}"  alt="Avatar" class="img-fluid my-5" style="width: 100px;" onerror="this.onerror=null;this.src='/images/docAvatar.png';"/>
                                 </td>
-                                <td class="text-nowrap align-middle"><a th:text="${user.firstName + ' ' + user.lastName}" th:href="@{/admins/user/view/} + ${user.id}">Name</a></td>
+                                <td class="text-nowrap align-middle"><a th:text="${user.firstName + ' ' + user.lastName}" th:href="@{/admins/edit/} + ${user.id}">Name</a></td>
                                 <td class="text-nowrap align-middle"><span th:text="${user.email}">Email</span></td>
                                 <td class="text-nowrap align-middle"><span th:text="${#temporals.format(user.lastLoginDate, 'dd/MM/yyyy')}">Date</span></td>
 
@@ -60,6 +61,12 @@
                                                                         th:checked="${user.isActive}" disabled></td>
                                 <td class="text-center text-nowrap align-middle"><input type="checkbox" class="form-check-input"
                                                                             th:checked="${user.isLocked}" disabled></td>
+                                <td class="text-center align-middle">
+                                    <div class="btn-group align-top">
+                                        <a class="btn btn-sm btn-outline-secondary" th:href="@{/admins/edit/} + ${user.id}">Edit</a>
+                                        <a class="btn btn-sm btn-outline-secondary" th:href="@{/admins/delete/} + ${user.id}"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

@@ -152,6 +152,10 @@ public class UserService implements ApplicationListener<AuthenticationSuccessEve
         return modelMapper.map(userRepository.findByEmail(username).orElseThrow(() -> new NotFoundException("There is no such user!")), UserEditDTO.class);
     }
 
+    public UserEditDTO getEditDetailsById(Long id) {
+        return modelMapper.map(userRepository.findById(id).orElseThrow(() -> new NotFoundException("There is no such user!")), UserEditDTO.class);
+    }
+
     public void update(UserEditDTO userEditDTO) {
 
         UserEntity newUser = userRepository.findByEmail(userEditDTO.getEmail()).orElseThrow(() -> new NotFoundException("There is no such user!"))
