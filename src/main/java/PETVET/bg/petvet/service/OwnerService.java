@@ -2,6 +2,7 @@ package PETVET.bg.petvet.service;
 
 import PETVET.bg.petvet.model.dto.AddOwnerDTO;
 import PETVET.bg.petvet.model.dto.EditOwnerDTO;
+import PETVET.bg.petvet.model.dto.SearchOwnerDTO;
 import PETVET.bg.petvet.model.entity.AddressEntity;
 
 import PETVET.bg.petvet.model.entity.OwnerEntity;
@@ -10,6 +11,7 @@ import PETVET.bg.petvet.model.view.OwnerDetailsView;
 import PETVET.bg.petvet.model.view.OwnerDropDownView;
 import PETVET.bg.petvet.model.view.OwnerTableView;
 import PETVET.bg.petvet.repository.OwnerRepository;
+import PETVET.bg.petvet.repository.OwnerSpecification;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -127,5 +129,11 @@ public class OwnerService {
         }
 
         ownerRepository.save(updatedOwner);
+    }
+
+    public Page<OwnerTableView> searchOwner(SearchOwnerDTO searchOwnerDTO, Pageable pageable) {
+
+        return this.ownerRepository.findAll(new OwnerSpecification(searchOwnerDTO),pageable)
+                .map(owner -> modelMapper.map(owner,OwnerTableView.class));
     }
 }

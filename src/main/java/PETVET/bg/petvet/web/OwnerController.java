@@ -1,9 +1,6 @@
 package PETVET.bg.petvet.web;
 
-import PETVET.bg.petvet.model.dto.AddOwnerDTO;
-import PETVET.bg.petvet.model.dto.EditOwnerDTO;
-import PETVET.bg.petvet.model.dto.EditPatientDTO;
-import PETVET.bg.petvet.model.dto.UserRegisterDTO;
+import PETVET.bg.petvet.model.dto.*;
 import PETVET.bg.petvet.model.entity.OwnerEntity;
 import PETVET.bg.petvet.model.view.OwnerDetailsView;
 import PETVET.bg.petvet.model.view.OwnerDropDownView;
@@ -97,13 +94,31 @@ public class OwnerController {
     }
 
     @GetMapping("/owners/all")
-    public String allOwners(Model model,@PageableDefault(
+    public String allOwners(@Valid SearchOwnerDTO searchOwnerDTO,BindingResult bindingResult, Model model, @PageableDefault(
             sort = "firstName",
             direction = Sort.Direction.ASC,
             page = 0,
             size = 7) Pageable pageable){
 
-        model.addAttribute("owners", ownerService.findViewAll(pageable));
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("searchOwnerDTO", searchOwnerDTO);
+            model.addAttribute(
+                    "org.springframework.validation.BindingResult.searchOwnerDTO",
+                    bindingResult);
+            return "owners";
+        }
+        if (!model.containsAttribute("searchOwnerDTO")) {
+            model.addAttribute("searchOwnerDTO", searchOwnerDTO);
+        }
+
+        if (!searchOwnerDTO.isEmpty()) {
+            model.addAttribute("owners", ownerService.searchOwner(searchOwnerDTO, pageable));
+        } else {
+            model.addAttribute("owners", ownerService.findViewAll(pageable));
+
+        }
+
+
         return "owners";
     }
 
