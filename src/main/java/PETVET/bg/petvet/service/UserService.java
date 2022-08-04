@@ -1,5 +1,6 @@
 package PETVET.bg.petvet.service;
 
+import PETVET.bg.petvet.model.dto.AdminEditUserDTO;
 import PETVET.bg.petvet.model.dto.UserEditDTO;
 import PETVET.bg.petvet.model.dto.UserRegisterDTO;
 import PETVET.bg.petvet.model.entity.UserEntity;
@@ -7,6 +8,7 @@ import PETVET.bg.petvet.model.entity.UserRoleEntity;
 import PETVET.bg.petvet.model.entity.enums.UserRoleEnum;
 import PETVET.bg.petvet.model.exception.NotFoundException;
 import PETVET.bg.petvet.model.mapper.UserMapper;
+import PETVET.bg.petvet.model.view.AdminEditUserView;
 import PETVET.bg.petvet.model.view.UserAdminView;
 import PETVET.bg.petvet.repository.UserRepository;
 import PETVET.bg.petvet.repository.UserRoleRepository;
@@ -27,7 +29,6 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -152,8 +153,14 @@ public class UserService implements ApplicationListener<AuthenticationSuccessEve
         return modelMapper.map(userRepository.findByEmail(username).orElseThrow(() -> new NotFoundException("There is no such user!")), UserEditDTO.class);
     }
 
-    public UserEditDTO getEditDetailsById(Long id) {
-        return modelMapper.map(userRepository.findById(id).orElseThrow(() -> new NotFoundException("There is no such user!")), UserEditDTO.class);
+    public AdminEditUserDTO getEditDetailsById(Long id) {
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NotFoundException("There is no such user!"));
+        AdminEditUserDTO adminEditUserDTO = new AdminEditUserDTO()
+                .setIsActive(userEntity.isActive())
+                .setIsLocked(userEntity.isLocked())
+                .setUserRoles(userEntity.getUserRoles().stream().map(e -> e.getUserRole()).collect(Collectors.toList()));
+
+        return adminEditUserDTO;
     }
 
     public void update(UserEditDTO userEditDTO) {
@@ -214,5 +221,34 @@ public class UserService implements ApplicationListener<AuthenticationSuccessEve
         return userRepository.findAll().stream()
                 .map(u -> modelMapper.map(u, UserAdminView.class))
                 .collect(Collectors.toList());
+    }
+
+    public void adminUpdateProfile(AdminEditUserDTO adminEditUserDTO, Long id) {
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NotFoundException("There is no such user!"));
+        userEntity.setActive(!adminEditUserDTO.isActive())
+                .setLocked(adminEditUserDTO.isLocked())
+                .setUserRoles(adminEditUserDTO.getUserRoles().stream().map(r -> userRoleRepository.findByUserRole(r)).collect(Collectors.toList()));
+
+        userRepository.save(userEntity);
+    }
+
+    public AdminEditUserView findAdminEditUserView(Long id) {
+        return  modelMapper.map(userRepository.findById(id), AdminEditUserView.class);
+    }
+
+    public AdminEditUserDTO findAdminEditUserDTO(Long id) {
+
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NotFoundException("There is no such user!"));
+        AdminEditUserDTO adminEditUserDTO = new AdminEditUserDTO();
+                adminEditUserDTO
+                .setIsActive(userEntity.isActive())
+                .setIsLocked(userEntity.isLocked())
+                .setUserRoles(userEntity.getUserRoles().stream().map(e -> e.getUserRole()).collect(Collectors.toList()));
+
+        return adminEditUserDTO;
+    }
+
+    public void deleteByUserId(Long id) {
+        userRepository.deleteById(id);
     }
 }

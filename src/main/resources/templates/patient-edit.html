@@ -21,7 +21,7 @@
     <div class="row" style="height: 4em;"></div>
     <form class="justify-content-center mx-auto"
           th:action="@{/patients/edit/}+${editPatientDTO.id}"
-          th:method="post"
+          th:method="put"
           th:object="${editPatientDTO}">
         <h2 class="text-center text-black">Edit patient details:</h2>
 

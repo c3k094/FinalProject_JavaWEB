@@ -24,7 +24,7 @@
 <div class="container-fluid pt-5 mb-4">
     <div class="row" style="height: 4em;"></div>
     <form class="justify-content-center mx-auto" th:action="@{/owners/edit/} + ${editOwnerDTO.id}"
-          th:method="post"
+          th:method="put"
           th:object="${editOwnerDTO}">
         <h2 class="text-center text-black">Edit owner details:</h2>
         <div class="row">

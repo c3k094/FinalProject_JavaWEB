@@ -103,7 +103,7 @@ public class PatientController {
         return "patient-edit";
     }
 
-    @PostMapping("/patients/edit/{id}")
+    @PutMapping("/patients/edit/{id}")
     public String addPatient(@Valid EditPatientDTO editPatientDTO,
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes,
