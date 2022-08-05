@@ -117,20 +117,8 @@ public class UserService implements ApplicationListener<AuthenticationSuccessEve
 
         userRepository.save(newUser);
 
-        UserDetails userDetails =
-                appUserDetailsService.loadUserByUsername(newUser.getEmail());
-
-        Authentication auth =
-                new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        userDetails.getPassword(),
-                        userDetails.getAuthorities()
-                );
-
-        SecurityContextHolder.
-                getContext().
-                setAuthentication(auth);
-    }
+        updateAuthentication(newUser);
+        }
 
     private void updateAuthentication(UserEntity newUser) {
         UserDetails userDetails =

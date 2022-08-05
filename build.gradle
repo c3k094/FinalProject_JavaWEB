@@ -22,13 +22,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'mysql:mysql-connector-java:8.0.29'
 	implementation 'org.webjars:bootstrap-datepicker:1.9.0'
 	implementation 'org.webjars:bootstrap:4.0.0-2'
 	implementation 'org.webjars:font-awesome:6.1.0'
 	implementation 'org.modelmapper:modelmapper:3.1.0'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE'
+
+	testRuntimeOnly 'org.hsqldb:hsqldb'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 }
 
