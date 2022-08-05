@@ -79,4 +79,6 @@ public class OwnerEntity extends BaseEntity{
         this.pets = pets;
         return this;
     }
+
+
 }

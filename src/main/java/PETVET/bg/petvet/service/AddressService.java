@@ -23,9 +23,4 @@ public class AddressService {
     public Optional<AddressEntity> findByCityAndCountryAndStreet(String city, String country, String street) {
         return addressRepository.findByCityAndCountryAndStreet(city, country, street);
     }
-
-
-    public void deleteById(Long id) {
-        addressRepository.deleteById(id);
-    }
 }
