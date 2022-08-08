@@ -38,7 +38,7 @@ public class OwnerController {
         return "owner-add";
     }
 
-    @GetMapping("/owners/delete/{id}")
+    @DeleteMapping("/owners/delete/{id}")
     public String delete(@PathVariable Long id){
         ownerService.deleteById(id);
         return "redirect:/owners/all";

@@ -65,8 +65,20 @@ public class ManipulationService {
                         .setCastrated(manipulationAddDTO.isCastrated());
             }
 
-        ManipulationEntity manipulationEntity = modelMapper.map(manipulationAddDTO, ManipulationEntity.class);
-        manipulationEntity.setAnimal(patient);
+        //ManipulationEntity manipulationEntity = modelMapper.map(manipulationAddDTO, ManipulationEntity.class);
+        ManipulationEntity manipulationEntity = new ManipulationEntity()
+                .setManipulation(manipulationAddDTO.getManipulation())
+                .setManipulationDate(manipulationAddDTO.getManipulationDate())
+                .setDewormed(manipulationAddDTO.isDewormed())
+                .setDewormingType(manipulationAddDTO.getDewormingType())
+                .setAnimalDewormingDate(manipulationAddDTO.getAnimalDewormingDate())
+                .setVaccinated(manipulationAddDTO.isVaccinated())
+                .setVaccine(manipulationAddDTO.getVaccine())
+                .setAnimalVaccinationDate(manipulationAddDTO.getAnimalVaccinationDate())
+                .setCastrated(manipulationAddDTO.isCastrated())
+                .setAdditionalInformation(manipulationAddDTO.getAdditionalInformation())
+                .setAnimal(patient);
+
         UserEntity doctor = userService.findByEmail(userDetails.getUsername());
         manipulationEntity.setDoctor(doctor);
 

@@ -104,7 +104,10 @@
                                 <td class="text-center align-middle">
                                     <div class="btn-group align-top">
                                         <a class="btn btn-sm btn-outline-secondary badge" th:href="@{/owners/edit/} + ${owner.id}">Edit</a>
-                                        <a class="btn btn-sm btn-outline-secondary badge" th:href="@{/owners/delete/} + ${owner.id}"><i class="fa fa-trash"></i></a>
+                                        <form th:action="@{'/owners/delete/' + ${owner.id}}"
+                                              th:method="delete">
+                                            <button class="btn btn-sm btn-outline-secondary badge" type="submit"><i class="fa fa-trash"></i></button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
