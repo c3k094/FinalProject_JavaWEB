@@ -29,7 +29,47 @@
             <div class="card-body">
                 <div class="card-title">
                     <div class="row justify-content-between mx-5">
-                    <h6 class="mr-2"><span>Patients</span><small class="px-1">Be a wise doctor</small></h6>
+                        <h6 class="mr-2"><span>Owners</span><small class="px-1">Be a wise doctor</small></h6>
+                        <h2 class="text-center text-white">Search for patients</h2>
+                        <form
+                                th:method="GET"
+                                th:action="@{/patients/all}"
+                                th:object="${searchPatientDTO}"
+                                class="form-inline"
+                                style="justify-content: center; margin-top: 50px;"
+                        >
+                            <div style="position: relative">
+                                <input
+                                        th:field="*{identificationNumber}"
+                                        th:errorclass="is-invalid"
+                                        class="form-control mr-sm-2"
+                                        style="width: 280px;"
+                                        type="search"
+                                        placeholder="Identification number..."
+                                        aria-label="Search"
+                                        id="identificationNumber"
+                                />
+                                <input
+                                        th:field="*{name}"
+                                        th:errorclass="is-invalid"
+                                        class="form-control mr-sm-2"
+                                        style="width: 280px;"
+                                        type="search"
+                                        placeholder="Name..."
+                                        aria-label="Search"
+                                        id="name"
+                                />
+                                <small
+                                        id="searchOfferHelpInline"
+                                        class="bg-danger text-light rounded invalid-feedback"
+                                        style="width: 97%; position: absolute; padding: 3px 15px; text-align: center;"
+                                >
+                                    Try writing something this time.
+                                </small>
+                            </div>
+                            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>
                     <a class="btn btn-primary" th:href="@{/patients/add}">Add patient</a>
                     </div>
                 </div>

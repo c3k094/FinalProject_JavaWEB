@@ -1,11 +1,16 @@
 package PETVET.bg.petvet.service;
 
 import PETVET.bg.petvet.model.dto.EditPatientDTO;
+import PETVET.bg.petvet.model.dto.SearchOwnerDTO;
+import PETVET.bg.petvet.model.dto.SearchPatientDTO;
 import PETVET.bg.petvet.model.entity.AnimalEntity;
 import PETVET.bg.petvet.model.exception.NotFoundException;
+import PETVET.bg.petvet.model.view.OwnerTableView;
 import PETVET.bg.petvet.model.view.PatientDetailsView;
 import PETVET.bg.petvet.model.view.PatientTableView;
+import PETVET.bg.petvet.repository.OwnerSpecification;
 import PETVET.bg.petvet.repository.PatientRepository;
+import PETVET.bg.petvet.repository.PatientSpecification;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -85,5 +90,11 @@ public class PatientService {
 
     public AnimalEntity findById(Long id) {
         return this.patientRepository.findById(id).orElseThrow(() -> new NotFoundException("There is no such patient!"));
+    }
+
+    public Page<PatientTableView> searchPatient(SearchPatientDTO searchPatientDTO, Pageable pageable) {
+
+        return this.patientRepository.findAll(new PatientSpecification(searchPatientDTO), pageable)
+                .map(patient -> modelMapper.map(patient, PatientTableView.class));
     }
 }

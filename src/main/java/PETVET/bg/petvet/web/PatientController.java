@@ -2,6 +2,8 @@ package PETVET.bg.petvet.web;
 
 import PETVET.bg.petvet.model.dto.AddPatientDTO;
 import PETVET.bg.petvet.model.dto.EditPatientDTO;
+import PETVET.bg.petvet.model.dto.SearchOwnerDTO;
+import PETVET.bg.petvet.model.dto.SearchPatientDTO;
 import PETVET.bg.petvet.model.entity.AnimalEntity;
 import PETVET.bg.petvet.model.view.OwnerDropDownView;
 import PETVET.bg.petvet.model.view.PatientDetailsView;
@@ -49,15 +51,32 @@ public class PatientController {
     }
 
     @GetMapping("/patients/all")
-    public String allPatients(Model model,@PageableDefault(
+    public String allPatients(@Valid SearchPatientDTO searchPatientDTO, BindingResult bindingResult, Model model, @PageableDefault(
             sort = "owner.firstName",
             direction = Sort.Direction.ASC,
             page = 0,
             size = 7) Pageable pageable) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("searchPatientDTO", searchPatientDTO);
+            model.addAttribute(
+                    "org.springframework.validation.BindingResult.searchPatientDTO",
+                    bindingResult);
+            return "patients";
+        }
+        if (!model.containsAttribute("searchPatientDTO")) {
+            model.addAttribute("searchPatientDTO", searchPatientDTO);
+        }
 
-        model.addAttribute("patients", patientService.findViewAll(pageable));
+        if (!searchPatientDTO.isEmpty()) {
+            model.addAttribute("patients", patientService.searchPatient(searchPatientDTO, pageable));
+        } else {
+            model.addAttribute("patients", patientService.findViewAll(pageable));
+
+        }
+
 
         return "patients";
+
     }
 
     @GetMapping("/patients/delete/{id}")
