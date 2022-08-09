@@ -4,10 +4,7 @@
     <title>PetVet</title>
 
     <th:block th:include="~{/fragments/head.html}"/>
-    <link rel="stylesheet" href="//unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="//unpkg.com/bootstrap-select@1.12.4/dist/css/bootstrap-select.min.css"
-          type="text/css"/>
-    <link rel="stylesheet" href="//unpkg.com/bootstrap-select-country@4.0.0/dist/css/bootstrap-select-country.min.css"
           type="text/css"/>
 
 </head>
@@ -19,13 +16,15 @@
 </header>
 <div class="container-fluid pt-5 mb-4">
     <div class="row" style="height: 4em;"></div>
-    <form class="justify-content-center mx-auto"
+    <form class="form mx-auto col-md-8 col-lg-6 d-flex row g-3 justify-content-center"
           th:action="@{/patients/add} + ${hasOwner ? '?ownerId=' + addPatientDTO.ownerId : ''}"
           th:method="post"
           th:object="${addPatientDTO}">
-        <h2 class="text-center text-black">Patient details:</h2>
+        <h2 class="text-center text-black pb-5">Patient details:</h2>
 
-        <div class="row" th:styleappend="${hasOwner} ? 'visibility:hidden' : ''">
+        <div class="row pb-3" th:styleappend="${hasOwner} ? 'visibility:hidden' : ''">
+            <h6>Owner: </h6>
+            <hr class="mt-0 mb-4">
             <div class="form-group col-md-6">
                 <label class="text-center text-black font-weight-bold" for="ownerId">Owner</label>
                 <select id="ownerId"
@@ -45,38 +44,21 @@
                 </p>
             </div>
         </div>
-        <div class="form-group col-md-6">
-            <label for="patientName">Patient name</label>
-            <input type="text" th:field="*{name}"
-                   th:errorclass="is-invalid" class="form-control" id="patientName" placeholder="Rodrigo">
-            <p class="invalid-feedback errors alert alert-danger">
-                Name is required and should be between 2 and 20 symbols.
-            </p>
-        </div>
 
-        <div class="form-group col-md-2">
-            <label for="animalType">Animal type</label>
-            <input type="text" th:field="*{animalType}"
-                   th:errorclass="is-invalid" class="form-control" id="animalType" placeholder="Animal type">
-            <p class="invalid-feedback errors alert alert-danger">
-                Animal type is required and should be between 2 and 50 symbols.
-            </p>
-        </div>
-
-        <div class="form-group row">
-
-            <div>
-                <label for="birthdate">Date of birth:</label>
-                <input type="date" th:field="*{birthdate}"  name="birthdate" th:errorclass="is-invalid"  id="birthdate"/>
+        <div class="row">
+            <h6>Patient information: </h6>
+            <hr class="mt-0 mb-4">
+            <div class="form-group col-md-6 mb-3">
+                <label for="patientName">Patient name</label>
+                <input type="text" th:field="*{name}"
+                       th:errorclass="is-invalid" class="form-control" id="patientName">
                 <p class="invalid-feedback errors alert alert-danger">
-                    Date is required and should be in the format dd/MM/yyyy and should be today date or before that.
+                    Name is required and should be between 2 and 20 symbols.
                 </p>
             </div>
-        </div>
 
-        <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="animalId">Animal Identification number(from passport)</label>
+                <label for="animalId">Animal Identification number</label>
                 <input type="text" th:field="*{identificationNumber}"
                        th:errorclass="is-invalid" class="form-control" id="animalId">
                 <p class="invalid-feedback errors alert alert-danger">
@@ -86,68 +68,102 @@
                     There already is an animal with this identification number.
                 </p>
             </div>
-            <div class="form-group col-md-2">
+        </div>
+        <div class="row pb-3">
+            <div class="form-group col-md-6">
+                <label for="animalType">Animal type</label>
+                <input type="text" th:field="*{animalType}"
+                       th:errorclass="is-invalid" class="form-control" id="animalType">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Animal type is required and should be between 2 and 50 symbols.
+                </p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="birthdate" class="text-center text-black font-weight-bold">Date of birth:</label>
+                <input type="date" class="form-control" th:field="*{birthdate}" name="birthdate" th:errorclass="is-invalid" id="birthdate"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Date is required and should be in the format dd/MM/yyyy and should be today date or before that.
+                </p>
+            </div>
+        </div>
+
+        <div class="row pb-3">
+            <h6>Optional information:</h6>
+            <hr class="mt-0 mb-6">
+            <div class="form-group col-md-6">
                 <label for="breed">Breed</label>
                 <input type="text" th:field="*{breed}" class="form-control" id="breed">
             </div>
         </div>
-            <div class="form-row">
-                <input type="checkbox" name="vaccinated" th:field="*{vaccinated}"
-                       class="form-check-input" id="vaccinated">
-                <label class="form-check-label" for="vaccinated">Is the animal vaccinated</label>
+        <div class="row pb-3">
+            <div class="form-check form-switch col-4 text-black">
+                <input type="checkbox" class="form-check-input" role="switch" th:checked="*{vaccinated}"
+                       name="vaccinated" id="isVaccinated">
+                <label class="form-check-label" for="isVaccinated">Vaccinated</label>
             </div>
 
-            <div>
-                <label for="vaccinationDate">Date of vaccination:</label>
-                <input type="date" th:field="*{vaccinationDate}"  name="vaccinationDate"  id="vaccinationDate"/>
-
+            <div class="form-check form-switch col-4 text-black">
+                <input type="checkbox" class="form-check-input" role="switch" th:checked="*{dewormed}"
+                       name="dewormed" id="isDewormed">
+                <label class="form-check-label" for="isDewormed">Dewormed</label>
             </div>
 
+            <div class="form-check form-switch col-4 text-black">
+                <input type="checkbox" class="form-check-input" role="switch" th:checked="*{castrated}"
+                       name="castrated" id="isCastrated">
+                <label class="form-check-label" for="isCastrated">Castrated</label>
+            </div>
+        </div>
+
+        <div class="row pb-2">
+            <div class="form-group col-4">
+                <label for="vaccinationDate" class="text-center text-black font-weight-bold">Date of
+                    vaccination:</label>
+                <input type="date" class="form-control" th:field="*{vaccinationDate}" id="vaccinationDate"
+                       th:errorclass="is-invalid"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    The date should be in the format dd-MM-yyyy and to be today or before that.
+                </p>
+            </div>
+
+            <div class="form-group col-4">
+                <label for="dewormingDate" class="text-center text-black font-weight-bold">Date of deworming:</label>
+                <input type="date" class="form-control" th:field="*{dewormingDate}" id="dewormingDate"/>
+
+            </div>
+        </div>
+        <div class="row pb-5">
             <div class="form-group col-md-4">
                 <label for="vaccine">Vaccine</label>
                 <input type="text" th:field="*{vaccine}"
                        class="form-control" id="vaccine" placeholder="Vaccine information">
             </div>
+            <div class="form-group col-md-4">
+                <label for="dewormingType">Deworming type</label>
 
-            <div class="form-row">
-                <div class="form-row">
-                    <input type="checkbox" name="dewormed" th:field="*{dewormed}"
-                           class="form-check-input" id="dewormed">
-                    <label class="form-check-label" for="dewormed">Is the animal dewormed</label>
-                </div>
-
-                <div>
-                    <label for="vaccinationDate">Date of deworming:</label>
-                    <input type="date" th:field="*{dewormingDate}"  name="dewormingDate"  id="dewormingDate"/>
-
-                </div>
-
-                <div class="form-group col-md-4">
-                    <label class="text-center text-black font-weight-bold" for="dewormingType">Type of Deworming</label>
-                    <select id="dewormingType"
-                            name="dewormingType"
-                            th:errorclass="is-invalid"
-                            class="form-select">
-                        <option value="">Deworming Type</option>
-                        <option th:each="e : ${T(PETVET.bg.petvet.model.entity.enums.DewormingTypeEnum).values()}"
-                                th:text="${e}"
-                                th:value="${e}"
-                                th:selected="${e} == *{dewormingType}">
-                            Deworming type
-                        </option>
-                    </select>
-                </div>
+                <select id="dewormingType"
+                    name="dewormingType"
+                    th:errorclass="is-invalid"
+                    class="form-select">
+                <option value="">Deworming Type</option>
+                <option th:each="e : ${T(PETVET.bg.petvet.model.entity.enums.DewormingTypeEnum).values()}"
+                        th:text="${e}"
+                        th:value="${e}"
+                        th:selected="${e} == *{dewormingType}">
+                    Deworming type
+                </option>
+            </select>
             </div>
+        </div>
 
-                <div class="form-row">
-                    <input type="checkbox" name="castrated" th:field="*{castrated}"
-                           class="form-check-input" id="castrated">
-                    <label class="form-check-label" for="castrated">Is the animal castrated</label>
-                </div>
+        <div class="pb-3 btn-group" role="group">
+            <button class="btn btn-outline-warning col-4 mx-3"
+                    onclick="window.history.go(-1); return false;"
+                    role="button">Cancel
+            </button>
+            <button type="submit" class="btn btn-primary col-4 mx-3">Save</button>
 
-
-        <button type="submit" class="btn btn-primary">Add patient to the database</button>
-    </form>
+        </div>    </form>
 </div>
 
 </body>
