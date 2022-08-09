@@ -80,7 +80,8 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="birthdate" class="text-center text-black font-weight-bold">Date of birth:</label>
-                <input type="date" class="form-control" th:field="*{birthdate}" name="birthdate" th:errorclass="is-invalid" id="birthdate"/>
+                <input type="date" class="form-control" th:field="*{birthdate}" name="birthdate"
+                       th:errorclass="is-invalid" id="birthdate"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     Date is required and should be in the format dd/MM/yyyy and should be today date or before that.
                 </p>
@@ -142,17 +143,17 @@
                 <label for="dewormingType">Deworming type</label>
 
                 <select id="dewormingType"
-                    name="dewormingType"
-                    th:errorclass="is-invalid"
-                    class="form-select">
-                <option value="">Deworming Type</option>
-                <option th:each="e : ${T(PETVET.bg.petvet.model.entity.enums.DewormingTypeEnum).values()}"
-                        th:text="${e}"
-                        th:value="${e}"
-                        th:selected="${e} == *{dewormingType}">
-                    Deworming type
-                </option>
-            </select>
+                        name="dewormingType"
+                        th:errorclass="is-invalid"
+                        class="form-select">
+                    <option value="">Deworming Type</option>
+                    <option th:each="e : ${T(PETVET.bg.petvet.model.entity.enums.DewormingTypeEnum).values()}"
+                            th:text="${e}"
+                            th:value="${e}"
+                            th:selected="${e} == *{dewormingType}">
+                        Deworming type
+                    </option>
+                </select>
             </div>
         </div>
 
@@ -163,7 +164,8 @@
             </button>
             <button type="submit" class="btn btn-primary col-4 mx-3">Save</button>
 
-        </div>    </form>
+        </div>
+    </form>
 </div>
 
 </body>
