@@ -5,16 +5,6 @@
     <title>PetVet</title>
 
     <th:block th:include="~{/fragments/head.html}"/>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-select@1.12.4/dist/css/bootstrap-select.min.css"
-          type="text/css"/>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-select-country@4.0.0/dist/css/bootstrap-select-country.min.css"
-          type="text/css"/>
-
-    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
-    <script src="https://unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-select@1.12.4/dist/js/bootstrap-select.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-select-country@4.0.0/dist/js/bootstrap-select-country.min.js"></script>
 </head>
 <body>
 <header id="header" class="fixed-top">
@@ -23,13 +13,16 @@
 
 <div class="container-fluid pt-5 mb-4">
     <div class="row" style="height: 4em;"></div>
-    <form class="justify-content-center mx-auto" th:action="@{/owners/add}"
+    <form class="form mx-auto col-md-8 col-lg-6 d-flex row g-3 justify-content-center"
+          th:action="@{/owners/add}"
           th:method="post"
           th:object="${addOwnerModel}">
-        <h2 class="text-center text-black">Owner details:</h2>
+        <h2 class="text-center text-black pb-5">New Owner Details:</h2>
         <div class="row">
+            <h6>Personal information: </h6>
+            <hr class="mt-0 mb-4">
             <div class="form-group col-md-6 mb-3">
-                <label for="firstName" class="text-white font-weight-bold">First Name</label>
+                <label for="firstName" class="text-black font-weight-bold">First Name</label>
                 <input
                         id="firstName"
                         th:field="*{firstName}"
@@ -37,21 +30,19 @@
                         type="text"
                         min="2"
                         max="20"
-                        class="form-control"
-                        placeholder="First name"/>
+                        class="form-control"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     First name is required and should be between 2 and 20 symbols.
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">
-                <label for="lastName" class="text-white font-weight-bold">Last Name</label>
+                <label for="lastName" class="text-black font-weight-bold">Last Name</label>
                 <input
                         id="lastName"
                         th:field="*{lastName}"
                         th:errorclass="is-invalid"
                         type="text"
-                        min="2" max="20" class="form-control"
-                        placeholder="Last name"/>
+                        min="2" max="20" class="form-control"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     Last name is required and should be between 2 and 20 symbols.
                 </p>
@@ -59,13 +50,13 @@
         </div>
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label for="email" class="text-white font-weight-bold">Email</label>
+                <label for="email" class="text-black font-weight-bold">Email</label>
                 <input id="email"
                        th:field="*{email}"
                        th:errorclass="is-invalid"
                        type="text"
                        class="form-control"
-                       placeholder="Email"/>
+                       placeholder="example@example.com"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     Email is required and should be valid.
                 </p>
@@ -73,54 +64,61 @@
                     Email is already occupied
                 </p>
             </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="phoneNumber">Owner Phone Number</label>
-                    <input th:field="*{phoneNumber}"
-                           th:errorclass="is-invalid" type="number" class="form-control" id="phoneNumber">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Phone number is required and should be 10 digits.
-                    </p>
-                    <p th:if="${phoneTaken}" class="errors alert alert-danger">
-                        Phone number is already used.
-                    </p>
-                </div>
+            <div class="form-group col-md-6">
+                <label for="phoneNumber">Phone Number</label>
+                <input th:field="*{phoneNumber}"
+                       th:errorclass="is-invalid"
+                       type="number"
+                       class="form-control"
+                       id="phoneNumber">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Phone number is required and should be 10 digits.
+                </p>
+                <p th:if="${phoneTaken}" class="errors alert alert-danger">
+                    Phone number is already used.
+                </p>
             </div>
         </div>
-        <div class="form-row">
-            <div>
-            <select th:field="*{country}" th:errorclass="is-invalid" class="selectpicker countrypicker"></select>
-            <p class="invalid-feedback errors alert alert-danger">
-                Country is required.
-            </p>
-        <script>
-            $('.countrypicker').countrypicker();
-        </script>
+        <div class="row">
+            <h6>Address:</h6>
+            <hr class="mt-0 mb-4">
+            <div class="form-group col-md-4 mb-4">
+                <label for="country">Country</label>
+                <input th:field="*{country}"
+                       th:errorclass="is-invalid" type="text" class="form-control" id="country">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Country is required.
+                </p>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-4">
                 <label for="city">City</label>
                 <input th:field="*{city}" th:errorclass="is-invalid" type="text" class="form-control" id="city">
                 <p class="invalid-feedback errors alert alert-danger">
                     City is required.
                 </p>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-3">
                 <label for="postcode">Post Code</label>
                 <input th:field="*{postcode}" th:errorclass="is-invalid" type="text" class="form-control" id="postcode">
             </div>
+        </div>
+        <div class="row pb-4">
+            <div class="form-group col-md-8">
+                <label for="address">Street Address</label>
+                <input th:field="*{street}" th:errorclass="is-invalid" placeholder="Street name, number, etc." type="text" class="form-control" id="address">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Street address is required.
+                </p>
+            </div>
+        </div>
+        <div class="pb-3 text-center" role="group">
+            <button class="btn btn-outline-warning col-4 mx-3"
+                    onclick="window.history.go(-1); return false;"
+                    role="button">Cancel
+            </button>
+            <button type="submit" class="btn btn-primary col-4 mx-3">Save</button>
 
         </div>
-        <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="address">Street Address</label>
-            <input th:field="*{street}" th:errorclass="is-invalid" type="text" class="form-control" id="address">
-            <p class="invalid-feedback errors alert alert-danger">
-                Street address is required.
-            </p>
-        </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Save owner</button>
     </form>
 </div>
 </div>
