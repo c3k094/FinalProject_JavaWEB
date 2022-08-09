@@ -1,6 +1,6 @@
 package PETVET.bg.petvet.model.dto;
 
-import PETVET.bg.petvet.model.entity.enums.DewormingType;
+import PETVET.bg.petvet.model.entity.enums.DewormingTypeEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
@@ -43,7 +43,7 @@ public class EditPatientDTO {
     @SuppressWarnings("SpellCheckingInspection")
     private boolean isDewormed;
 
-    private DewormingType dewormingType;
+    private DewormingTypeEnum dewormingType;
 
     @SuppressWarnings("SpellCheckingInspection")
     @PastOrPresent
@@ -99,11 +99,11 @@ public class EditPatientDTO {
         return this;
     }
 
-    public DewormingType getDewormingType() {
+    public DewormingTypeEnum getDewormingType() {
         return dewormingType;
     }
 
-    public EditPatientDTO setDewormingType(DewormingType dewormingType) {
+    public EditPatientDTO setDewormingType(DewormingTypeEnum dewormingType) {
         this.dewormingType = dewormingType;
         return this;
     }

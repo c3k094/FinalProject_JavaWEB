@@ -63,7 +63,7 @@ public class AdminController {
         public String deleteUser(@PathVariable Long id){
         userService.deleteByUserId(id);
 
-        return "redirect:/";
+        return "redirect:/admins/users/all";
 
     }
 }

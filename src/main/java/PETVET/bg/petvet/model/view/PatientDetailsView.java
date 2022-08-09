@@ -2,10 +2,8 @@ package PETVET.bg.petvet.model.view;
 
 import PETVET.bg.petvet.model.entity.ManipulationEntity;
 import PETVET.bg.petvet.model.entity.OwnerEntity;
-import PETVET.bg.petvet.model.entity.enums.DewormingType;
-import org.springframework.format.annotation.DateTimeFormat;
+import PETVET.bg.petvet.model.entity.enums.DewormingTypeEnum;
 
-import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +28,7 @@ public class PatientDetailsView {
     @SuppressWarnings("SpellCheckingInspection")
     private boolean isDewormed;
 
-    private DewormingType dewormingType;
+    private DewormingTypeEnum dewormingType;
 
     @SuppressWarnings("SpellCheckingInspection")
     private Date dewormingDate;
@@ -83,11 +81,11 @@ public class PatientDetailsView {
         return this;
     }
 
-    public DewormingType getDewormingType() {
+    public DewormingTypeEnum getDewormingType() {
         return dewormingType;
     }
 
-    public PatientDetailsView setDewormingType(DewormingType dewormingType) {
+    public PatientDetailsView setDewormingType(DewormingTypeEnum dewormingType) {
         this.dewormingType = dewormingType;
         return this;
     }

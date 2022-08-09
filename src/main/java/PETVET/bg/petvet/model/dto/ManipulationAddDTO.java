@@ -1,6 +1,6 @@
 package PETVET.bg.petvet.model.dto;
 
-import PETVET.bg.petvet.model.entity.enums.DewormingType;
+import PETVET.bg.petvet.model.entity.enums.DewormingTypeEnum;
 import PETVET.bg.petvet.model.entity.enums.ManipulationsEnum;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -36,7 +36,7 @@ public class ManipulationAddDTO {
 
     private boolean isDewormed;
 
-    private DewormingType dewormingType;
+    private DewormingTypeEnum dewormingType;
 
     @PastOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -135,11 +135,11 @@ public class ManipulationAddDTO {
         return this;
     }
 
-    public DewormingType getDewormingType() {
+    public DewormingTypeEnum getDewormingType() {
         return dewormingType;
     }
 
-    public ManipulationAddDTO setDewormingType(DewormingType dewormingType) {
+    public ManipulationAddDTO setDewormingType(DewormingTypeEnum dewormingType) {
         this.dewormingType = dewormingType;
         return this;
     }

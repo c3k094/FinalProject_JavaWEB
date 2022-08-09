@@ -102,7 +102,7 @@
                                 </td>
                                 <td class="text-nowrap align-middle"><a th:text="${patient.name}" th:href="@{/patients/view/} + ${patient.id}">Name</a></td>
                                 <td class="text-nowrap align-middle"><span th:text="${patient.animalType}">Animal type</span></td>
-                                <td class="text-nowrap align-middle"><span th:text="${patient.birthday}">Birthday</span></td>
+                                <td class="text-nowrap align-middle"><span th:text="${#dates.format(patient.birthday, 'dd-MM-yyyy')}">Birthday</span></td>
                                 <td class="text-nowrap align-middle"><span th:text="${patient.identificationNumber}">Passport ID</span></td>
                                 <td class="text-nowrap align-middle"><a th:text="${patient.owner.firstName + ' ' + patient.owner.lastName}" th:href="@{/owners/view/} + ${patient.owner.id}">Owner name</a></td>
                                 <td class="text-center align-middle">

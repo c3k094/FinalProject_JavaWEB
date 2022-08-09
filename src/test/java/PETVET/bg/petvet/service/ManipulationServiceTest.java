@@ -2,12 +2,11 @@ package PETVET.bg.petvet.service;
 
 import PETVET.bg.petvet.model.dto.ManipulationAddDTO;
 import PETVET.bg.petvet.model.entity.*;
-import PETVET.bg.petvet.model.entity.enums.DewormingType;
+import PETVET.bg.petvet.model.entity.enums.DewormingTypeEnum;
 import PETVET.bg.petvet.model.entity.enums.ManipulationsEnum;
 import PETVET.bg.petvet.model.user.AppUserDetails;
 import PETVET.bg.petvet.model.view.ManipulationTableView;
 import PETVET.bg.petvet.repository.ManipulationRepository;
-import PETVET.bg.petvet.repository.PatientRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -137,7 +136,7 @@ public class ManipulationServiceTest {
                 .setManipulation(ManipulationsEnum.DEWORMING)
                 .setManipulationDate(manipDate)
                 .setDewormed(true)
-                .setDewormingType(DewormingType.BOTH)
+                .setDewormingType(DewormingTypeEnum.BOTH)
                 .setAnimalDewormingDate(manipDate)
                 .setAdditionalInformation("TestTestTest!")
                 .setAnimalId(patientId)
@@ -149,7 +148,7 @@ public class ManipulationServiceTest {
                 .setManipulation(ManipulationsEnum.DEWORMING)
                 .setManipulationDate(manipDate)
                 .setDewormed(true)
-                .setDewormingType(DewormingType.BOTH)
+                .setDewormingType(DewormingTypeEnum.BOTH)
                 .setAnimalDewormingDate(manipDate)
                 .setAdditionalInformation("TestTestTest!")
                 .setAnimal(patient)

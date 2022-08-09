@@ -129,7 +129,7 @@
                             th:errorclass="is-invalid"
                             class="form-select">
                         <option value="">Deworming Type</option>
-                        <option th:each="e : ${T(PETVET.bg.petvet.model.entity.enums.DewormingType).values()}"
+                        <option th:each="e : ${T(PETVET.bg.petvet.model.entity.enums.DewormingTypeEnum).values()}"
                                 th:text="${e}"
                                 th:value="${e}"
                                 th:selected="${e} == *{dewormingType}">

@@ -21,7 +21,7 @@ function showManipulations(data) {
         <tr>
         <td><span>${manip.manipulationDate}</span></td>
         <td><span>${manip.manipulation}</span></td>
-        <td><span>${manip.doctorFirstname + '' + manip.doctorLastName}</span></td>
+        <td><span>${manip.doctorFirstname + ' ' + manip.doctorLastName}</span></td>
         <td><span>${manip.additionalInformation}</span></td>
         <td class="text-center align-middle">
            <div class="btn-group align-top">

@@ -1,6 +1,6 @@
 package PETVET.bg.petvet.model.entity;
 
-import PETVET.bg.petvet.model.entity.enums.DewormingType;
+import PETVET.bg.petvet.model.entity.enums.DewormingTypeEnum;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -30,7 +30,7 @@ public class AnimalEntity extends BaseEntity{
     @SuppressWarnings("SpellCheckingInspection")
     private boolean isDewormed;
     @Enumerated(EnumType.STRING)
-    private DewormingType dewormingType;
+    private DewormingTypeEnum dewormingType;
 
     @SuppressWarnings("SpellCheckingInspection")
     private Date dewormingDate;
@@ -58,11 +58,11 @@ public class AnimalEntity extends BaseEntity{
         return this;
     }
 
-    public DewormingType getDewormingType() {
+    public DewormingTypeEnum getDewormingType() {
         return dewormingType;
     }
 
-    public AnimalEntity setDewormingType(DewormingType dewormingType) {
+    public AnimalEntity setDewormingType(DewormingTypeEnum dewormingType) {
         this.dewormingType = dewormingType;
         return this;
     }

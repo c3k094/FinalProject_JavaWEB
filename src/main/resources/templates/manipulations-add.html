@@ -88,16 +88,16 @@
         </div>
 
         <select id="dewormingType"
-                name="manipulation"
+                name="dewormingType"
                 th:errorclass="is-invalid"
                 class="form-select">
             <option value="">Deworming Type</option>
-            <option th:each="e : ${T(PETVET.bg.petvet.model.entity.enums.DewormingType).values()}"
+            <option th:each="e : ${T(PETVET.bg.petvet.model.entity.enums.DewormingTypeEnum).values()}"
                     th:text="${e}"
                     th:value="${e}"
                     th:selected="${e} == *{dewormingType}">
-                Deworming type
-            </option>
+                    Deworming type
+                </option>
         </select>
 
         <div class="form-group col-4">
@@ -124,8 +124,14 @@
                       th:field="*{additionalInformation}"
                       id="notes">Additional notes</textarea>
         </div>
+        <div class="pb-3 btn-group" role="group">
+            <button class="btn btn-outline-warning col-4 mx-3"
+                    onclick="window.history.go(-1); return false;"
+                    role="button">Cancel
+            </button>
+            <button type="submit" class="btn btn-primary col-4 mx-3">Save</button>
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        </div>
     </form>
 </div>
 
