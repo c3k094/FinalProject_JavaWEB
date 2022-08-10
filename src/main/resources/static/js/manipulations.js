@@ -25,7 +25,7 @@ function showManipulations(data) {
         <td><span>${manip.additionalInformation}</span></td>
         <td class="text-center align-middle">
            <div class="btn-group align-top">
-               <a class="btn btn-sm btn-outline-secondary" href="/manipulations/${manip.id}/edit">Edit</a>
+               <a class="btn btn-sm btn-outline-secondary" href="/manipulations/${manip.id}/view">View</a>
                <a class="btn btn-sm btn-outline-secondary" href="/manipulations/${manip.id}/delete"><i class="fa fa-trash"></i></a>
            </div>
         </td>
